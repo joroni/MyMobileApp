@@ -233,7 +233,7 @@ function drupalgap_entity_render_content(entity_type, entity) {
         // if the drupalgap display mode is not present.
         if (!field.display) { return false; }
         var display = field.display['default'];
-        if (field.display['drupalgap'] && field.display['drupalgap'].module) {
+        if (field.display['drupalgap']) {
           display = field.display['drupalgap'];
         }
         // Save the field name and weight.
@@ -300,7 +300,9 @@ function drupalgap_entity_render_field(entity_type, entity, field_name,
         if (entity[field_name][entity.language]) {
           items = entity[field_name][entity.language];
         }
-        else { items = entity[field_name]; }
+        else {
+          items = entity[field_name];
+        }
       }
       var elements = fn(
         entity_type, entity, field, null, entity.language, items, display
@@ -318,7 +320,7 @@ function drupalgap_entity_render_field(entity_type, entity, field_name,
     }
     else {
       console.log(
-        'WARNING: drupalgap_entity_render_field - ' + function_name + '() ' +
+        'WARNING: drupalgap_entity_render_field - ' + function_name + '()' +
         'does not exist!'
       );
     }
@@ -342,7 +344,9 @@ function drupalgap_entity_render_field(entity_type, entity, field_name,
     module_invoke_all(
       'entity_post_render_field', entity, field_name, field, reference
     );
-    if (reference.content != content) { return reference.content; }
+    if (reference.content != content) {
+      return reference.content;
+    }
     return content;
   }
   catch (error) { console.log('drupalgap_entity_render_field - ' + error); }
@@ -415,18 +419,6 @@ function drupalgap_entity_build_from_form_state(form, form_state) {
               // Extract the value.
               var field_value = value[language][delta];
 
-              // By default, we'll assume we'll be attaching this element item's
-              // value according to a key (usually 'value' is the default key
-              // used by Drupal fields). However, we'll give modules that
-              // implement hook_assemble_form_state_into_field() an opportunity
-              // to specify no usage of a key if their item doesn't need one.
-              // The geofield module is an example of field that doesn't use a
-              // key.
-              var field_key = {
-                value: 'value',
-                use_key: true
-              };
-
               // If this element is a field, give the field's module an
               // opportunity to assemble its own value, otherwise we'll just
               // use the field value extracted above.
@@ -438,8 +430,7 @@ function drupalgap_entity_build_from_form_state(form, form_state) {
                   form.elements[name].field_info_field,
                   form.elements[name].field_info_instance,
                   language,
-                  delta,
-                  field_key
+                  delta
                 );
               }
 
@@ -450,14 +441,9 @@ function drupalgap_entity_build_from_form_state(form, form_state) {
                 entity[name][language][key] = field_value;
               }
               else {
-                if (field_key.use_key) {
-                  var item = {};
-                  item[key] = field_value;
-                  entity[name][language].push(item);
-                }
-                else {
-                  entity[name][language].push(field_value);
-                }
+                var item = {};
+                item[key] = field_value;
+                entity[name][language].push(item);
               }
             }
           }
@@ -522,7 +508,7 @@ function drupalgap_entity_form_submit(form, form_state, entity) {
         // If there were any form errors, display them in an alert.
         var msg = _drupalgap_form_submit_response_errors(form, form_state, xhr,
           status, message);
-        if (msg) { drupalgap_alert(msg); }
+        if (msg) { alert(msg); }
       }
       catch (error) {
         console.log('drupalgap_entity_form_submit - error - ' + error);
@@ -707,8 +693,8 @@ function drupalgap_entity_get_core_fields(entity_type) {
  * Given an entity_type, this returns the entity JSON info, if it exists, false
  * otherwise. You may optionally call this function with no arguments to
  * retrieve the JSON info for all entity types. See also
- * @see http://api.drupal.org/api/drupal/includes%21common.inc/function/entity_get_info/7
- * @return {Object|Boolean}
+ * http://api.drupal.org/api/drupal/includes%21common.inc/function/entity_get_info/7
+ * @return {Object,Boolean}
  */
 function drupalgap_entity_get_info() {
   try {
@@ -793,7 +779,7 @@ function _drupalgap_entity_page_container_inject(entity_type, entity_id, mode,
     // inject the rendered page into the container.
     var id = _drupalgap_entity_page_container_id(entity_type, entity_id, mode);
     drupalgap.output = build;
-    $('#' + id).html(drupalgap_render_page()).trigger('create');
+    $('#' + id).html(drupalgap_render_page());
   }
   catch (error) {
     console.log('_drupalgap_entity_page_container_inject - ' + error);

@@ -21,8 +21,8 @@ Drupal.settings.language_default = 'und';
 /* Drupal Caching */
 
 // Set to true to enable local storage caching.
-Drupal.settings.cache.entity.enabled = false;
-Drupal.settings.cache.views.enabled = false;
+Drupal.settings.cache.entity.enabled = true;
+Drupal.settings.cache.views.enabled = true;
 
 // Number of seconds before cached copy expires. Set to 0 to cache forever, set
 // to 60 for one minute, etc.
@@ -73,13 +73,19 @@ drupalgap.settings.loader = {
  * Modules - http://drupalgap.org/node/74 |
  *****************************************/
 
-/** Contributed Modules - www/app/modules **/
+// Contributed Modules - www/app/modules
 
-//Drupal.modules.contrib['example'] = {};
+// E.g., these 2 lines will load the module at www/app/modules/example
+//var example_contrib_module = module_object_template('example');
+//Drupal.modules.contrib.example = example_contrib_module;
+// @todo - make this an easy one liner, e.g. module_load('contrib', 'date', {...});
 
-/** Custom Modules - www/app/modules/custom **/
+// Custom Modules - www/app/modules/custom
 
-//Drupal.modules.custom['my_module'] = {};
+// E.g., these 2 lines will load the module at www/app/modules/custom/example
+//var example_custom_module = module_object_template('example');
+//Drupal.modules.custom.example = example_custom_module;
+// @todo - make this an easy one liner, e.g. module_load('custom', 'my_module', {...});
 
 /***************************************|
  * Menus - http://drupalgap.org/node/85 |
@@ -201,7 +207,6 @@ drupalgap.settings.blocks.easystreet3 = {
     primary_local_tasks:{},
   },
   content:{
-    messages: {},
     main:{}
   },
   footer:{

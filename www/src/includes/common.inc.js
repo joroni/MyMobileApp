@@ -7,12 +7,8 @@
  */
 function drupalgap_add_page_to_dom(page_id, html) {
   try {
-    // Set the page id, the page class name and add the page to the dom body.
+    // Set the page id and add the page to the dom body.
     html = html.replace(/{:drupalgap_page_id:}/g, page_id);
-    html = html.replace(
-      /{:drupalgap_page_class:}/g,
-      drupalgap_page_class_get(drupalgap.router_path)
-    );
     $('body').append(html);
     // Add the page id to drupalgap.pages.
     drupalgap.pages.push(page_id);
@@ -127,50 +123,20 @@ function drupalgap_check_visibility(type, data) {
     // Pages.
     else if (typeof data.pages !== 'undefined' && data.pages &&
       data.pages.value && data.pages.value.length != 0) {
-      var current_path = drupalgap_path_get();
-      var current_path_parts = current_path.split('/');
       $.each(data.pages.value, function(page_index, path) {
-          if (path == '') { path = drupalgap.settings.front; }
-          if (path == current_path) {
+          if (path == '') {
+            path = drupalgap.settings.front;
+          }
+          if (path == drupalgap_path_get()) {
             if (data.pages.mode == 'include') { visible = true; }
             else if (data.pages.mode == 'exclude') { visible = false; }
-            return false;
           }
           else {
-            // It wasn't a direct path match, is there a wildcard that matches
-            // the router path?
-            if (path.indexOf('*') != -1) {
-              var router_path =
-                drupalgap_get_menu_link_router_path(current_path);
-              if (router_path.replace(/%/g, '*') == path) {
-                if (data.pages.mode == 'include') { visible = true; }
-                else if (data.pages.mode == 'exclude') { visible = false; }
-                return false;
-              }
-              else {
-                var path_parts = path.split('/');
-                var match = true;
-                if (path_parts.length == 0) { match = false; }
-                else if (path_parts.length == current_path_parts.length) {
-                  for (var i = 0; i < path_parts.length; i++) {
-                    if (path_parts[i] != current_path_parts[i]) {
-                      match = false;
-                      break;
-                    }
-                  }
-                }
-                if (data.pages.mode == 'include') { visible = false; }
-                else if (data.pages.mode == 'exclude') { visible = true; }
-                if (!match) { visible = !visible; }
-              }
-            }
-            else {
-              // There's no wildcard in the rule, and it wasn't a direct path
-              // match.
-              if (data.pages.mode == 'include') { visible = false; }
-              else if (data.pages.mode == 'exclude') { visible = true; }
-            }
+            if (data.pages.mode == 'include') { visible = false; }
+            else if (data.pages.mode == 'exclude') { visible = true; }
           }
+          // Break out of the loop if already determined to be visible.
+          if (visible) { return false; }
       });
     }
     return visible;
@@ -217,10 +183,11 @@ function drupalgap_get_path(type, name) {
                   else if (bundle == 'contrib') { path += 'app/modules'; }
                   else if (bundle == 'custom') { path += 'app/modules/custom'; }
                   else {
-                    var msg = 'drupalgap_get_path - unknown module bundle (' +
-                      bundle +
-                    ')';
-                    drupalgap_alert(msg);
+                    alert(
+                      'drupalgap_get_path - unknown module bundle (' +
+                        bundle +
+                      ')'
+                    );
                     return false;
                   }
                   path += '/' + name;
@@ -306,13 +273,15 @@ function drupalgap_error(message) {
                         arguments.callee.caller.name + ' - ' +
                         message;
     console.log(error_message);
-    if (drupalgap.settings.debug) { drupalgap_alert(error_message); }
+    if (drupalgap.settings.debug) { alert(error_message); }
     // If a message for the user was passed in, display it to the user.
-    if (arguments[1]) { drupalgap_alert(arguments[1]); }
+    if (arguments[1]) { alert(arguments[1]); }
     // Goto the error page if we are not already there.
     if (drupalgap_path_get() != 'error') { drupalgap_goto('error'); }
   }
-  catch (error) { console.log('drupalgap_error - ' + error); }
+  catch (error) {
+    alert('drupalgap_error - ' + error);
+  }
 }
 
 /**
@@ -362,8 +331,8 @@ function drupalgap_goto(path) {
       router_path = drupalgap_get_menu_link_router_path(path);
     }
 
-    // Make sure the user has access to this router path, if they don't send
-    // them to the 401 page.
+    // Make sure the user has access to this router path, if the don't send them
+    // to the 401 page.
     if (!drupalgap_menu_access(router_path)) {
       path = '401';
       router_path = drupalgap_get_menu_link_router_path(path);
@@ -386,8 +355,6 @@ function drupalgap_goto(path) {
     // accurracy we compare the jQM active page url with the destination page
     // id.
     if (drupalgap_jqm_active_page_url() == page_id && options.form_submission) {
-      // Clear any messages from the page before returning.
-      drupalgap_clear_messages();
       return false;
     }
 
@@ -427,8 +394,6 @@ function drupalgap_goto(path) {
         options.reloadingPage = true;
       }
       else if (!options.form_submission) {
-        // Clear any messages from the page.
-        drupalgap_clear_messages();
         drupalgap.page.process = false;
         $.mobile.changePage('#' + page_id, options);
         return;
@@ -503,7 +468,7 @@ function drupalgap_goto_generate_page_and_go(path, page_id, options) {
         }
       }
       else {
-        drupalgap_alert(
+        alert(
           'drupalgap_goto_generate_page_and_go - ' +
           'failed to load theme\'s page.tpl.html file'
         );
@@ -529,7 +494,7 @@ function drupalgap_goto_prepare_path(path) {
     // If the path is an empty string, change it to the front page path.
     if (path == '') {
       if (!drupalgap.settings.front) {
-        drupalgap_alert(
+        alert(
           'drupalgap_goto_prepare_path - ' +
           'no front page specified in settings.js!'
         );
@@ -550,24 +515,6 @@ function drupalgap_goto_prepare_path(path) {
     return path;
   }
   catch (error) { console.log('drupalgap_goto_prepare_path - ' + error); }
-}
-
-/**
- * Given a router path, this will return the CSS class name that can be used for
- * the page container.
- * @param {String} router_path The page router path.
- * @return {String} A css class name.
- */
-function drupalgap_page_class_get(router_path) {
-  try {
-    // Replace '/' and '%' with underscores, then trim any trailing underscores.
-    var class_name = router_path.replace(/[\/%]/g, '_');
-    while (class_name.lastIndexOf('_') == class_name.length - 1) {
-      class_name = class_name.substr(0, class_name.length - 1);
-    }
-    return class_name;
-  }
-  catch (error) { console.log('drupalgap_page_class_get - ' + error); }
 }
 
 /**
@@ -797,9 +744,8 @@ function drupalgap_render_region(region) {
   try {
     // Make sure there are blocks specified for this theme in settings.js.
     if (!eval('drupalgap.settings.blocks[drupalgap.settings.theme]')) {
-      var msg = 'drupalgap_render_region - there are no blocks for the "' +
-        drupalgap.settings.theme + ' " theme in the settings.js file!';
-      drupalgap_alert(msg);
+      alert('drupalgap_render_region - there are no blocks for the "' +
+            drupalgap.settings.theme + ' " theme in the settings.js file!');
       return '';
     }
     // Grab the current path.
@@ -851,7 +797,11 @@ function drupalgap_render_region(region) {
         }
       }
       // Render each block in the region.
-      $.each(drupalgap.settings.blocks[drupalgap.settings.theme][region.name],
+      $.each(
+        eval(
+          'drupalgap.settings.blocks[drupalgap.settings.theme].' +
+          region.name
+        ),
         function(block_delta, block_settings) {
           // Check the block's visibility settings.
           var render_block = false;

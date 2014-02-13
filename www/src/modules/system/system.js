@@ -10,10 +10,6 @@ function system_block_info() {
         'delta': 'main',
         'module': 'system'
       },
-      messages: {
-        delta: 'messages',
-        module: 'system'
-      },
       'logo': {
         'delta': 'logo',
         'module': 'system'
@@ -60,19 +56,6 @@ function system_block_view(delta) {
         // comments, etc). Depending on the menu link router, we need to route
         // this through the appropriate template files and functions.
         return drupalgap_render_page();
-        break;
-      case 'messages':
-        // If there are any messages waiting to be displayed, render them, then
-        // clear out the messages array.
-        var html = '';
-        if (drupalgap.messages.length == 0) { return html; }
-        $.each(drupalgap.messages, function(index, msg) {
-            html += '<div class="messages ' + msg.type + '">' +
-              msg.message +
-            '</div>';
-        });
-        drupalgap.messages = [];
-        return html;
         break;
       case 'logo':
         if (drupalgap.settings.logo) {
@@ -222,7 +205,7 @@ function system_offline_page() {
       'message': {
         'markup': '<h2>Failed Connection</h2>' +
           "<p>Oops! We couldn't connect to:</p>" +
-          '<p>' + Drupal.settings.site_path + '</p>'
+          '<p>' + drupalgap.settings.site_path + '</p>'
       },
       'try_again': {
         'theme': 'button',
@@ -250,17 +233,19 @@ function offline_try_again() {
   try {
     var connection = drupalgap_check_connection();
     if (drupalgap.online) {
-      system_connect({
-        success: function() {
+      drupalgap.services.drupalgap_system.connect.call({
+        'success': function() {
           drupalgap_goto('');
         }
       });
     }
     else {
-      var msg = 'Sorry, no connection found! (' + connection + ')';
-      drupalgap_alert(msg, {
-          title: 'Offline'
-      });
+      navigator.notification.alert(
+          'Sorry, no connection found! (' + connection + ')',
+          function() { },
+          'Offline',
+          'OK'
+      );
       return false;
     }
   }
@@ -318,8 +303,8 @@ function system_settings_form_submit(form, form_state) {
           variable_set(variable, value);
       });
     }
-    // @todo - a nice spot to have a drupalgap_set_message function, eh?
-    drupalgap_alert('The configuration options have been saved.');
+    // @todo - a nice spot to have a drupal_set_message function, eh?
+    alert('The configuration options have been saved.');
   }
   catch (error) { console.log('system_settings_form_submit - ' + error); }
 }

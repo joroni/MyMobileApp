@@ -2,7 +2,7 @@
  * Given an entity type, this will return its corresponding service resource, or
  * null if the resource doesn't exist.
  * @param {String} entity_type
- * @return {?Type|Object|null}
+ * @return {Object,null}
  */
 function drupalgap_services_get_entity_resource(entity_type) {
   try {
@@ -64,10 +64,6 @@ function drupalgap_service_resource_extract_results(options) {
       for (var permission in permissions) {
         options.data.user.permissions.push(permissions[permission]);
       }
-      // Pull out the content types, and set them by their type.
-      $.each(options.data.content_types_list, function(index, object) {
-          drupalgap.content_types_list[object.type] = object;
-      });
       // Pull out the content types user permissions.
       options.data.user.content_types_user_permissions =
         options.data.content_types_user_permissions;
@@ -92,7 +88,7 @@ drupalgap.services.rss = {
     'call': function(options) {
       try {
         if (!options.url) {
-          drupalgap_alert('drupalgap.services.rss.retrieve.call - missing url');
+          alert('drupalgap.services.rss.retrieve.call - missing url');
           return false;
         }
         var api_options =
@@ -103,7 +99,12 @@ drupalgap.services.rss = {
         drupalgap.api.call(api_options);
       }
       catch (error) {
-        console.log('RSS Retrieve Error - ' + error);
+        navigator.notification.alert(
+          error,
+          function() {},
+          'RSS Retrieve Error',
+          'OK'
+        );
       }
     }
   } // <!-- get_variable -->
@@ -114,7 +115,7 @@ drupalgap.services.rss = {
  * over the RSS items and assemble them into a nice array of JSON objects and
  * return them. Returns null if it fails.
  * @param {Object} data
- * @return {?Type|Array|null}
+ * @return {Array,null}
  */
 function drupalgap_services_rss_extract_items(data) {
   try {

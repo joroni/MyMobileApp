@@ -12,12 +12,18 @@ function menu_execute_active_handler() {
     if (!path) { path = drupalgap_path_get(); }
     var page_id = drupalgap_get_page_id(path);
 
-    // @todo - Make sure the user has access to this DrupalGap menu path!
+    // TODO - Check to make sure the user has access to this DrupalGap menu
+    // path!
 
     // Get the router path.
     var router_path = drupalgap_router_path_get();
 
     if (router_path) {
+      /*console.log(path);
+      console.log(router_path);
+      console.log(JSON.stringify(drupalgap.menu_links));
+      console.log(JSON.stringify(drupalgap.menu_links[router_path]));
+      alert('menu_execute_active_handler');*/
 
       // Call the page call back for this router path and send along any
       // arguments.
@@ -228,6 +234,24 @@ function menu_router_build() {
 }
 
 /**
+ * Sets the active path, which determines which page is loaded.
+ */
+// We could not use this because the page id has already been generated
+// here, and any arguments present generate a page id that won't match
+// the page already generated.
+/*function menu_set_active_item(path) {
+  try {
+    if (drupalgap.settings.debug) {
+      console.log('menu_set_active_item(' + path + ')');
+    }
+    drupalgap_path_set(path);
+  }
+  catch (error) {
+    alert('menu_set_active_item - ' + error);
+  }
+}*/
+
+/**
  * Given a menu link path, this determines and returns the router path as a
  * string.
  * @param {String} path
@@ -236,18 +260,14 @@ function menu_router_build() {
 function drupalgap_get_menu_link_router_path(path) {
   try {
 
-    // @TODO - Why is this function called twice sometimes? E.G. via an MVC item
+    // TODO - Why is this function called twice sometimes? E.G. via an MVC item
     // view item/local_users/user/0, this function gets called twice in one page
     // load, that can't be good.
 
-    // @TODO - this function has a limitation in the types of menu paths it can
+    // TODO - this function has a limitation in the types of menu paths it can
     // handle, for example a menu path of 'collection/%/%/list' with a path of
     // 'collection/local_users/user/list' can't find eachother. So we had to
     // change the mvc_menu() item path to be collection/list/%/%.
-
-    // @TODO - each time this function is called, we should create a static
-    // record of the result router path, keyed by the incoming path, that way
-    // this heavy function can be called more often with less resource.
 
     // Is this path defined in drupalgap.menu_links? If it is, use it's router
     // path if it is defined, otherwise just set its router path to its own
@@ -341,6 +361,10 @@ function drupalgap_get_menu_link_router_path(path) {
     if (!router_path) { router_path = path; }
 
     // Finally, return the router path.
+    if (drupalgap.settings.debug) {
+      console.log(args);
+      console.log('router_path: ' + path + ' => ' + router_path);
+    }
     return router_path;
   }
   catch (error) {
@@ -453,6 +477,8 @@ function drupalgap_menus_load() {
         });
       }
     }
+    //console.log(JSON.stringify(drupalgap.menus));
+    //alert('drupalgap_menus_load');
   }
   catch (error) { console.log('drupalgap_menus_load - ' + error); }
 }

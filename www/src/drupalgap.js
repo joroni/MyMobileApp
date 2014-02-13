@@ -35,7 +35,22 @@ function drupalgap_init() {
            { name: 'menu' },
            { name: 'mvc' },
            { name: 'node' },
-           /*{ name: 'services'},*/
+           /*{ name: 'services',
+             'includes':[
+               {'name':'comment'},
+               {'name':'drupalgap_content'},
+               {'name':'drupalgap_system'},
+               {'name':'drupalgap_taxonomy'},
+               {'name':'drupalgap_user'},
+               {'name':'file'},
+               {'name':'node'},
+               {'name':'services'},
+               {'name':'system'},
+               {'name':'taxonomy_term'},
+               {'name':'taxonomy_vocabulary'},
+               {'name':'user'},
+             ]
+           },*/
            { name: 'system' },
            { name: 'taxonomy' },
            { name: 'user' },
@@ -66,7 +81,6 @@ function drupalgap_init() {
       back: false, /* moving backwards or not */
       back_path: '', /* the path to move back to */
       blocks: [],
-      content_types_list: {}, /* holds info about each content type */
       entity_info: {},
       field_info_fields: {},
       field_info_instances: {},
@@ -74,10 +88,9 @@ function drupalgap_init() {
       form_states: [],
       loading: false, /* indicates if the loading message is shown or not */
       loader: 'loading', /* used to determine the jQM loader mode */
-      messages: [],
       menus: {},
       menu_links: {},
-      menu_router: {}, /* @todo - doesn't appear to be used at all, remove it */
+      menu_router: {},
       mvc: {
         models: {},
         views: {},
@@ -157,10 +170,12 @@ function _drupalgap_deviceready() {
 
     // Verify site path is set.
     if (!Drupal.settings.site_path || Drupal.settings.site_path == '') {
-      var msg = 'No site_path to Drupal set in the app/settings.js file!';
-      drupalgap_alert(msg, {
-          title: 'Error'
-      });
+      navigator.notification.alert(
+          'No site_path to Drupal set in the app/settings.js file!',
+          function() {},
+          'Error',
+          'OK'
+      );
       return;
     }
 
@@ -169,10 +184,12 @@ function _drupalgap_deviceready() {
     drupalgap_check_connection();
     if (!drupalgap.online) {
       module_invoke_all('device_offline');
-      drupalgap_alert('No connection found!', {
-          title: 'Offline',
-          alertCallback: function() { drupalgap_goto('offline'); }
-      });
+      navigator.notification.alert(
+          'No connection found!',
+          function() { drupalgap_goto('offline'); },
+          'Offline',
+          'OK'
+      );
       return;
     }
     else {
@@ -214,14 +231,33 @@ function _drupalgap_deviceready() {
                    Drupal.settings.site_path +
                    ' is online. If you continue to have problems visit ' +
                    'www.drupalgap.org for troubleshooting info.';
-           drupalgap_alert(msg, {
-               title: 'Unable to Connect to Drupal',
-               alertCallback: function() { drupalgap_goto('offline'); }
-           });
+            navigator.notification.alert(
+                msg,
+                function() { drupalgap_goto('offline'); },
+                'Unable to Connect to Drupal',
+                'OK'
+            );
           }
         };
 
-        // Make the system connect call.
+        // If we have a session id in local storage, then we'll use it as the
+        // CSRF token when making the initial call to system connect. This will
+        // determine if the user is still authenticated with Drupal or not.
+        /*var token = window.localStorage.getItem('sessid');
+        if (token) {
+          drupalgap.sessid = token;
+          options.token = token;
+          options.beforeSend = function (request) {
+            request.setRequestHeader("X-CSRF-Token", options.token);
+          };
+        }*/
+
+        // DrupalGap System Connect Service Resource
+        // @todo - replace this with a call to system_connect. But first, you'll
+        // have to change the DrupalGap module to do an alter on the default
+        // Services system connect resource, then you can drop the
+        // drupalgap_system resource.
+        //drupalgap.services.drupalgap_system.connect.call(options);
         system_connect(options);
       }
     }
@@ -280,20 +316,9 @@ function drupalgap_load_modules() {
               }
           });
         }
-        $.each(Drupal.modules[bundle], function(module_name, module) {
-            // If the module object is empty, initialize a module object.
-            if ($.isEmptyObject(module)) {
-              Drupal.modules[bundle][module_name] =
-                module_object_template(module_name);
-              module = Drupal.modules[bundle][module_name];
-            }
-            // If the module's name isn't set, set it.
-            if (!module.name) {
-              Drupal.modules[bundle][module_name].name = module_name;
-              module = Drupal.modules[bundle][module_name];
-            }
+        $.each(Drupal.modules[bundle], function(index, module) {
             // Determine module directory.
-            var dir = drupalgap_modules_get_bundle_directory(bundle);
+            dir = drupalgap_modules_get_bundle_directory(bundle);
             module_base_path = dir + '/' + module.name;
             // Add module .js file to array of paths to load.
             module_path = module_base_path + '/' + module.name + '.js';
@@ -320,8 +345,7 @@ function drupalgap_load_modules() {
                     },
                     dataType: 'script',
                     error: function(xhr, textStatus, errorThrown) {
-                      var msg = 'Failed to load module! (' + module.name + ')';
-                      drupalgap_alert(msg);
+                      alert('Failed to load module! (' + module.name + ')');
                     }
                 });
               }
@@ -342,8 +366,7 @@ function drupalgap_load_modules() {
 function drupalgap_load_theme() {
   try {
     if (!drupalgap.settings.theme) {
-      var msg = 'drupalgap_load_theme - no theme specified in settings.js';
-      drupalgap_alert(msg);
+      alert('drupalgap_load_theme - no theme specified in settings.js');
     }
     else {
       // Pull the theme name from the settings.js file.
@@ -356,7 +379,7 @@ function drupalgap_load_theme() {
         if (!drupalgap_file_exists(theme_path)) {
           var error_msg = 'drupalgap_theme_load - Failed to load theme! ' +
             'The theme\'s JS file does not exist: ' + theme_path;
-          drupalgap_alert(error_msg);
+          alert(error_msg);
           return false;
         }
       }
@@ -389,7 +412,7 @@ function drupalgap_load_theme() {
       else {
         var error_msg = 'drupalgap_load_theme() - failed - ' +
           template_info_function + '() does not exist!';
-        drupalgap_alert(error_msg);
+        alert(error_msg);
       }
     }
     return false;
@@ -445,34 +468,6 @@ function drupalgap_add_css() {
 }
 
 /**
- * Alerts a message to the user using PhoneGap's alert. It is important to
- * understand this is an async function, so code will continue to execute while
- * the alert is displayed to the user.
- * You may optionally pass in a second argument as a JSON object with the
- * following properties:
- *   alertCallback - the function to call after the user presses OK
- *   title - the title to use on the alert box, defaults to 'Alert'
- *   buttonName - the text to place on the button, default to 'OK'
- * @param {String} message
- */
-function drupalgap_alert(message) {
-  try {
-    var options = null;
-    if (arguments[1]) { options = arguments[1]; }
-    var alertCallback = function() { };
-    var title = 'Alert';
-    var buttonName = 'OK';
-    if (options) {
-      if (options.alertCallback) { alertCallback = options.alertCallback; }
-      if (options.title) { title = options.title; }
-      if (options.buttonName) { title = options.buttonName; }
-    }
-    navigator.notification.alert(message, alertCallback, title, buttonName);
-  }
-  catch (error) { console.log('drupalgap_alert - ' + error); }
-}
-
-/**
  * Rounds up all blocks defined by hook_block_info and places them in the
  * drupalgap.blocks array.
  */
@@ -504,6 +499,62 @@ function drupalgap_load_blocks() {
     }
   }
   catch (error) { console.log('drupalgap_load_blocks - ' + error); }
+}
+
+/**
+ * Takes option set 2, grabs the success/error callback(s), if any,
+ * and appends them onto option set 1's callback(s), then returns
+ * the newly assembled option set.
+ * @param {Object} options_set_1
+ * @param {Object} options_set_2
+ * @return {Object}
+ */
+function drupalgap_chain_callbacks(options_set_1, options_set_2) {
+
+  // Setup the new options.
+  var new_options_set = {};
+  $.extend(true, new_options_set, options_set_1);
+
+  // Chain the success callbacks.
+  if (options_set_2.success) {
+    if (new_options_set.success) {
+      if (!$.isArray(new_options_set.success)) {
+        var backup = new_options_set.success;
+        new_options_set.success = [];
+        new_options_set.success.push(backup);
+      }
+      new_options_set.success.push(options_set_2.success);
+    }
+    else {
+      new_options_set.success = options_set_2.success;
+    }
+  }
+
+  // Chain the error callbacks.
+  if (options_set_2.error) {
+    if (new_options_set.error) {
+      if (!$.isArray(new_options_set.error)) {
+        var backup = new_options_set.error;
+        new_options_set.error = [];
+        new_options_set.error.push(backup);
+      }
+      new_options_set.error.push(options_set_2.error);
+    }
+    else {
+      new_options_set.error = options_set_2.error;
+    }
+  }
+
+  // For all other variables in option set 2, add them to the new option set.
+  $.each(options_set_2, function(index, object) {
+    if (index != 'success' && index != 'error') {
+      new_options_set[index] = object;
+    }
+  });
+
+  // Return the new option set.
+  //console.log(JSON.stringify(new_options_set));
+  return new_options_set;
 }
 
 /**
@@ -557,6 +608,31 @@ function drupalgap_empty(value) {
   }
   catch (error) { console.log('drupalgap_empty - ' + error); }
 }
+
+/**
+ *
+ */
+/*function drupalgap_field_widgets_load() {
+  try {
+    var modules = module_implements('field_widget_info');
+    if (!modules) { return null; }
+    $.each(modules, function(i, module){
+        var field_widgets = module_invoke(module, 'field_widget_info');
+        if (!field_widgets) { return; }
+        $.each(field_widgets, function(name, field_widget){
+            $.each(field_widget.field_types, function(j, field_type){
+                drupalgap.field_widget_info[field_type] = {
+                  'module':module,
+                  'field_widget':name
+                };
+            });
+        });
+    });
+  }
+  catch (error) {
+    alert('drupalgap_field_widgets_load - ' + error);
+  }
+}*/
 
 /**
  * Checks if a given file exists, returns true or false.
@@ -951,13 +1027,7 @@ function drupalgap_menu_access(path) {
         // names, so check that user account's role(s) for that permission to
         // grant access.
         if (drupalgap.menu_links[path].access_arguments) {
-          if ($.isArray(drupalgap.menu_links[path].access_arguments)) {
-            $.each(drupalgap.menu_links[path].access_arguments, function(index, 
-              permission) {
-              access = user_access(permission);
-              if (access) { return false; }
-            });
-          }
+          // TODO - implement
         }
         else {
           // There is no access callback and no access arguments specified with
@@ -1172,38 +1242,6 @@ function drupalgap_remove_page_from_dom(page_id) {
 }
 
 /**
- * Sets a message to display to the user. Optionally pass in a second argument
- * to specify the message type: status, warning, error
- * @param {String} message
- */
-function drupalgap_set_message(message) {
-  try {
-    if (empty(message)) { return; }
-    var type = 'status';
-    if (arguments[1]) { type = arguments[1]; }
-    var msg = {
-      message: message,
-      type: type
-    };
-    drupalgap.messages.push(msg);
-  }
-  catch (error) { console.log('drupalgap_set_message - ' + error); }
-}
-
-/**
- * Clears the messages from the current page. Optionally pass in a page id to
- * clear messages from a particular page.
- */
-function drupalgap_clear_messages() {
-  try {
-    var page_id = arguments[0];
-    if (empty(page_id)) { page_id = drupalgap_get_page_id(); }
-    $('#' + page_id + ' div.messages').remove();
-  }
-  catch (error) { console.log('drupalgap_clear_messages - ' + error); }
-}
-
-/**
  * Implementation of drupal_set_title().
  * @param {String} title
  */
@@ -1361,6 +1399,35 @@ function drupalgap_theme_registry_build() {
     });
   }
   catch (error) { console.log('drupalgap_theme_registry_build - ' + error); }
+}
+
+/*
+ * Given a drupal permission machine name, this function returns true if the
+ * current user has that permission, false otherwise.
+ * @param {String} permission
+ * @return {Boolean}
+ */
+function user_access(permission) {
+  try {
+    // Make sure they provided a permission.
+    if (permission == null) { return false; }
+    // User 1 always has permission.
+    if (Drupal.user.uid == 1) { return true; }
+    // For everyone else, assume they don't have permission. Iterate over
+    // Drupal.user.permissions to see if the current user has the given
+    // permission, then return the result.
+    var access = false;
+    if (Drupal.user.permissions && Drupal.user.permissions.length != 0) {
+      $.each(Drupal.user.permissions, function(index, user_permission) {
+        if (permission == user_permission) {
+          access = true;
+          return;
+        }
+      });
+    }
+    return access;
+  }
+  catch (error) { console.log('user_access - ' + error); }
 }
 
 /**

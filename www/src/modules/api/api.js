@@ -238,22 +238,14 @@ function drupalgap_api_default_options() {
 }
 
 /**
- * When a form submission for an entity is assembling the entity json object to
+ * When an form submission for an entity is assembling the entity json object to
  * send to the server, some form element fields need to be assembled in unique
  * ways to match the entity's structure in Drupal. Modules that implement fields
  * can use this hook to properly assemble the item value (by delta) and return
  * it.
- * @param {Object} entity_type
- * @param {String} bundle
- * @param {String} form_state_value
- * @param {Object} field
- * @param {Object} instance
- * @param {String} langcode
- * @param {Number} delta
- * @param {Object} field_key
  */
 function hook_assemble_form_state_into_field(entity_type, bundle,
-  form_state_value, field, instance, langcode, delta, field_key) {
+  form_state_value, field, instance, langcode, delta) {
   try {
   }
   catch (error) { console.log(' - ' + error); }
@@ -266,8 +258,6 @@ function hook_assemble_form_state_into_field(entity_type, bundle,
  * false if you'd like DrupalGap to NOT continue. If DrupalGap continues, it
  * will perform a System Connect resource call then go to the App's front page.
  * This is called during DrupalGap's "deviceready" implementation for PhoneGap.
- * Note, the Drupal.user object is not initialized at this point, and always
- * appears to be an anonymous user.
  */
 function hook_deviceready() {}
 
@@ -276,7 +266,6 @@ function hook_deviceready() {}
  * any services from within your implementation, you may run into an infinite
  * loop in your code. See http://drupalgap.org/project/force_authentication for
  * example usage.
- * @deprecated - use hook_services_postprocess() instead.
  */
 function hook_services_success(url, data) { }
 
@@ -291,7 +280,7 @@ function hook_block_info() {}
 function hook_block_view() {}
 
 /**
- * A hook used to handle a 404 in the app.
+ *
  */
 function hook_404(router_path) {}
 
@@ -347,8 +336,7 @@ function hook_image_path_alter(src) { }
 
 /**
  * This hook is used by modules that need to execute custom code when the module
- * is loaded. Note, the Drupal.user object is not initialized at this point, and
- * always appears to be an anonymous user.
+ * is loaded.
  */
 function hook_install() {}
 
@@ -363,4 +351,6 @@ function hook_mvc_model() {
 }
 function hook_mvc_view() {}
 function hook_mvc_controller() {}
+
+// TODO - list all other core hooks here.
 

@@ -176,7 +176,7 @@ function drupalgap_form_get_element_id(name, form_id) {
  */
 function drupalgap_form_get_element_container_class(name) {
   try {
-    return 'form-item field-name-' + name.replace(/_/g, '-');
+    return 'field-name-' + name.replace(/_/g, '-');
   }
   catch (error) {
     console.log('drupalgap_form_get_element_container_class - ' + error);
@@ -291,7 +291,7 @@ function drupalgap_form_state_values_assemble(form) {
  *
  * @param {String} id
  * @param {Object} element
- * @return {String|Number}
+ * @return {String,Number}
  */
 function _drupalgap_form_state_values_assemble_get_element_value(id, element) {
   try {
@@ -334,10 +334,7 @@ function drupalgap_get_form(form_id) {
       // Render the form.
       html = drupalgap_form_render(form);
     }
-    else {
-      var msg = 'drupalgap_get_form - failed to get form (' + form_id + ')';
-      drupalgap_alert(msg);
-    }
+    else { alert('drupalgap_get_form - failed to get form (' + form_id + ')'); }
     return html;
   }
   catch (error) { console.log('drupalgap_get_form - ' + error); }
@@ -480,7 +477,7 @@ function drupalgap_form_load(form_id) {
     else {
       var error_msg = 'drupalgap_form_load - no callback function (' +
                        function_name + ') available for form (' + form_id + ')';
-      drupalgap_alert(error_msg);
+      alert(error_msg);
     }
     return form;
   }
@@ -717,7 +714,6 @@ function _drupalgap_form_render_element(form, element) {
               delta,
               element
           ]);
-          // @todo - sometimes an item gets merged without a type here, why?
           $.extend(item, items[delta]);
         }
 
@@ -731,7 +727,7 @@ function _drupalgap_form_render_element(form, element) {
     });
 
     // Show the 'Add another item' button on unlimited value fields.
-    /*if (element.field_info_field &&
+    if (element.field_info_field &&
       element.field_info_field.cardinality == -1) {
       var add_another_item_variables = {
         text: 'Add another item',
@@ -746,18 +742,24 @@ function _drupalgap_form_render_element(form, element) {
         }
       };
       html += theme('button', add_another_item_variables);
-    }*/
+    }
 
     // Add element description.
     if (element.description && element.type != 'hidden') {
       html += '<div>' + element.description + '</div>';
     }
 
-    // Close the element container.
-    if (element.type != 'hidden') { html += '</div>'; }
+    // Close the element container and add a spacer div.
+    if (element.type != 'hidden') {
+      html += '</div><div>&nbsp;</div>';
+    }
 
     // Return the element html.
     return html;
+
+    // Give modules a chance to alter the variables.
+    //module_invoke_all('form_element_alter', form, element, variables);
+
 
   }
   catch (error) { console.log('_drupalgap_form_render_element - ' + error); }
@@ -778,23 +780,15 @@ function _drupalgap_form_render_element_item(form, element, variables, item) {
     // Depending on the element type, if necessary, adjust the variables and/or
     // theme function to be used, then render the element by calling its theme
     // function.
-    switch (item.type) {
-      case 'text':
-        item.type = 'textfield';
-        break;
-      case 'list_text':
-      case 'list_float':
-      case 'list_integer':
-        item.type = 'select';
-        break;
-    }
+    if (item.type == 'text') { item.type = 'textfield'; }
+    else if (item.type == 'list_text') { item.type = 'select'; }
     var theme_function = item.type;
 
     // Make any preprocess modifications to the elements so they will map
     // cleanly to their theme function. A hook_field_widget_form() should be
     // used instead here.
     if (item.type == 'submit') {
-      // @todo - convert this to a field widget form hook?
+      // TODO - convert this to a field widget form hook?
       variables.attributes.onclick =
         '_drupalgap_form_submit(\'' + form.id + '\');';
       if (!variables.attributes['data-theme']) {
@@ -824,8 +818,6 @@ function _drupalgap_form_render_element_item(form, element, variables, item) {
     else {
       if (item.markup || item.markup == '') { html += item.markup; }
       else {
-        // @todo - the reason for this warning sometimes happens because the
-        // item.type is lost with $.extend in _drupalgap_form_render_element().
         var msg = 'Field ' + item.type + ' not supported.';
         html += '<div><em>' + msg + '</em></div>';
         console.log('WARNING: _drupalgap_form_render_element_item() - ' + msg);
@@ -838,13 +830,6 @@ function _drupalgap_form_render_element_item(form, element, variables, item) {
       for (var i = 0; i < item.children.length; i++) {
         if (item.children[i].markup) { html += item.children[i].markup; }
         else if (item.children[i].type) {
-          // Is there a title for a label?
-          if (item.children[i].title) {
-            html += theme('form_element_label', {
-                element: item.children[i]
-            });
-          }
-          // Render the child with the theme system.
           html += theme(item.children[i].type, item.children[i]);
         }
         else {
@@ -931,8 +916,7 @@ function _drupalgap_form_submit(form_id) {
     // Load the form from local storage.
     var form = drupalgap_form_local_storage_load(form_id);
     if (!form) {
-      var msg = '_drupalgap_form_submit - failed to load form: ' + form_id;
-      drupalgap_alert(msg);
+      alert('_drupalgap_form_submit - failed to load form: ' + form_id);
       return false;
     }
 
@@ -962,7 +946,7 @@ function _drupalgap_form_submit(form_id) {
           $.each(drupalgap.form_errors, function(name, message) {
               html += message + '\n\n';
           });
-          drupalgap_alert(html);
+          alert(html);
         }
         else { form_submission(); }
       }
@@ -1022,7 +1006,7 @@ function _drupalgap_form_submit(form_id) {
  * @param {Object} xhr
  * @param {String} status
  * @param {String} message
- * @return {String|Boolean}
+ * @return {String, Boolean}
  */
 function _drupalgap_form_submit_response_errors(form, form_state, xhr, status,
   message) {

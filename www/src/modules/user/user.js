@@ -1,30 +1,4 @@
 /**
- * Determine whether the user has a given privilege. Optionally pass in a user
- * account JSON object for the second paramater to check that particular
- * account.
- * @param {String} string The permission, such as "administer nodes", being
- *                        checked for.
- * @return {Boolean}
- */
-function user_access(string) {
-  try {
-    var account;
-    if (arguments[1]) { account = arguments[1]; }
-    else { account = Drupal.user; }
-    if (account.uid == 1) { return true; }
-    var access = false;
-    $.each(account.permissions, function(index, object) {
-        if (object.permission == string) {
-          access = true;
-          return false;
-        }
-    });
-    return access;
-  }
-  catch (error) { console.log('user_access - ' + error); }
-}
-
-/**
  * The access callback for the user/%/edit page.
  * @param {Object} account
  * @return {Boolean}
@@ -342,7 +316,7 @@ function user_register_form_submit(form, form_state) {
           // E-mail verification not needed, if administrator approval is
           // needed, notify the user, otherwise log them in.
           if (drupalgap.site_settings.user_register == '2') {
-            drupalgap_alert(
+            alert(
             form.user_register.user_mail_register_pending_approval_required_body
             );
             drupalgap_goto('');
@@ -360,9 +334,7 @@ function user_register_form_submit(form, form_state) {
         }
         else {
           // E-mail verification needed... notify the user.
-          drupalgap_alert(
-            form.user_register.user_mail_register_email_verification_body
-          );
+          alert(form.user_register.user_mail_register_email_verification_body);
           drupalgap_goto('');
         }
       },
@@ -370,7 +342,7 @@ function user_register_form_submit(form, form_state) {
         // If there were any form errors, display them.
         var msg = _drupalgap_form_submit_response_errors(form, form_state, xhr,
           status, message);
-        if (msg) { drupalgap_alert(msg); }
+        if (msg) { alert(msg); }
       }
     });
   }
@@ -464,14 +436,13 @@ function user_services_postprocess(options, result) {
       return;
     }
     // If there were any form errors, alert them to the user.
-    if (!result.responseText) { return; }
     var response = JSON.parse(result.responseText);
     if ($.isArray(response)) {
       var msg = '';
       $.each(response, function(index, message) {
           msg += message + '\n';
       });
-      if (msg != '') { drupalgap_alert(msg); }
+      if (msg != '') { alert(msg); }
     }
   }
   catch (error) { console.log('user_services_postprocess - ' + error); }
