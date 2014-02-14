@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>jDrupal</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type='text/css' href="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.css" />
+    <link rel='stylesheet' type='text/css' href='http://code.jquery.com/qunit/qunit-1.12.0.css' />
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.js"></script>
+    <script type='text/javascript' src='http://code.jquery.com/qunit/qunit-1.12.0.js'></script>
+    
+    <!-- include to test binary -->
+    <script src="bin/jdrupal.js"></script>
+    <!--<script src="bin/jdrupal.min.js"></script>-->
+    
+    <!-- includes to test source code -->
+    <!--<script src="src/includes/module.inc.js"></script>
+    <script src="src/comment.js"></script>
+    <script src="src/drupal.js"></script>
+    <script src="src/entity.js"></script>
+    <script src="src/node.js"></script>
+    <script src="src/services/services.comment.js"></script>
+    <script src="src/services/services.entity.js"></script>
+    <script src="src/services/services.js"></script>
+    <script src="src/services/services.node.js"></script>
+    <script src="src/services/services.system.js"></script>
+    <script src="src/services/services.taxonomy_term.js"></script>
+    <script src="src/services/services.taxonomy_vocabulary.js"></script>
+    <script src="src/services/services.user.js"></script>
+    <script src="src/taxonomy_term.js"></script>
+    <script src="src/taxonomy_vocabulary.js"></script>
+    <script src="src/user.js"></script>-->
+    
+    <!-- include tests -->
+    <script src="tests/services.comment.test.js"></script>
+    <script src="tests/services.node.test.js"></script>
+    <script src="tests/services.system.test.js"></script>
+    <script src="tests/services.taxonomy_term.test.js"></script>
+    <script src="tests/services.taxonomy_vocabulary.test.js"></script>
+    <script src="tests/services.user.test.js"></script>
+    
+  </head>
+
+  <body>
+    
+    <div data-role="page" id="jdrupal">
+      <div data-role="header">
+        <h1>jDrupal</h1>
+      </div><!-- header -->
+      <div data-role="content" class='content'>
+        <div data-role="fieldcontain">
+          <label for="site_path">Drupal Path</label>
+          <input type="text" id="site_path" value="" />
+        </div>
+        <div data-role="fieldcontain">
+          <label for="endpoint">Services Endpoint Path</label>
+          <input type="text" id="endpoint" value="" />
+        </div>
+        <div data-role="fieldcontain" id="login_name_wrapper" style="display: none;">
+          <label for="login_name">Username</label>
+          <input type="text" id="login_name" value="" />
+        </div>
+        <div data-role="fieldcontain" id="login_pass_wrapper" style="display: none;">
+          <label for="login_pass">Password</label>
+          <input type="password" id="login_pass" />
+        </div>
+        <fieldset>
+          <div><button type="submit" id="go">Connect</button></div>
+          <div><button type="submit" id="login" style="display: none;">Login</button></div>
+          <div><button type="submit" id="logout" style="display: none;">Logout</button></div>
+          <div><button type="submit" id="run_tests" style="display: none;">Run Tests</button></div>
+        </fieldset>
+        <div id="qunit"></div>
+        <ol id="qunit-tests"></ol>
+        <div id="qunit-fixture"></div>
+      </div><!-- /content -->
+    </div><!-- /page -->
+    
+    <script type="text/javascript">
+      $().ready(function() {
+          
+          Drupal.settings.debug = true;
+          
+          // Set the site path.
+          Drupal.settings.site_path = window.location.href.replace(
+            '/sites/all/libraries/jDrupal/',
+            ''
+          ).replace('tests.html', '');
+          $('#site_path').val(Drupal.settings.site_path);
+          
+          $('#go').on('click', function(){
+              set_drupal_settings();
+              if (Drupal.settings.site_path == '') {
+                alert('Enter a site path!');
+                return false;
+              }
+              if (Drupal.settings.endpoint == '') {
+                alert('Enter an endpoint path!');
+                return false;
+              }
+              system_connect({
+                  success:function(result){
+                    $('#login_name_wrapper').show('slow');
+                    $('#login_pass_wrapper').show('slow');
+                    if (result.user.uid != 0) {
+                      $('#logout').show();
+                      $('#go').hide();
+                      if (Drupal.user.uid == 1) {
+                        $('#run_tests').show('slow');
+                      }
+                      else {
+                        alert('Only user #1 can perform tests, your are user # ' + Drupal.user.uid + '!');
+                      }
+                    }
+                    else {
+                      $('#login').show('slow');
+                      $('#go').hide();
+                    }
+                  },
+                  error:function(xhr, status, message){
+                    alert(message);
+                  }
+              });
+              return false;
+          });
+          
+          $('#login').on('click', function(){
+              set_drupal_settings();
+              user_login($('#login_name').val(), $('#login_pass').val(), {
+                  success:function(result){
+                    alert('Hi, ' + result.user.name + '!');
+                    $('#login').hide();
+                    $('#logout').show('slow');
+                    $('#run_tests').show('slow');
+                  },
+                  error:function(xhr, status, message){
+                    alert(message);
+                  }
+              });
+              return false;
+          });
+          
+          $('#logout').on('click', function(){
+              user_logout({
+                  success:function(result){
+                    if (result[0]) {
+                       alert("Logged out!");
+                       $('#login').show('slow');
+                       $('#run_tests').hide();
+                       $('#logout').hide();
+                    }
+                  }
+              });
+              return false;
+          });
+          
+          function set_drupal_settings() {
+            Drupal.settings.site_path = $('#site_path').val();
+            Drupal.settings.endpoint = $('#endpoint').val();
+          }
+          
+          $('#run_tests').on('click', function(){
+              if ($('#login_name').val() == '') {
+                alert('Enter your user name to run tests!');
+                return false;
+              }
+              if ($('#login_pass').val() == '') {
+                alert('Enter your password to run tests!');
+                return false;
+              }
+              set_drupal_settings();
+              test_services_system();
+              // this call iterates through other tests
+              test_services_user($('#login_name').val(), $('#login_pass').val());
+              return false;
+          });
+      });
+    </script>
+    
+  </body>
+</html>
