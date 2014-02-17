@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>jDrupal</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type='text/css' href='css/jquery.mobile-1.4.0.min.css' />
+    <link rel='stylesheet' type='text/css' href='css/qunit-1.12.0.css' />
+    <script src="js/jquery-1.9.1.min.js"></script>
+    <script src="js/jquery.mobile-1.4.0.min.js"></script>
+    <script type='text/javascript' src='js/qunit-1.12.0.js'></script>
+    
+    <!-- include to test binary -->
+    <script src="bin/jdrupal.js"></script>
+    <!--<script src="bin/jdrupal.min.js"></script>-->
+    
+    <!-- includes to test source code -->
+    <script src="src/includes/module.inc.js"></script>
+    <script src="src/comment.js"></script>
+    <script src="src/drupal.js"></script>
+    <script src="src/entity.js"></script>
+    <script src="src/node.js"></script>
+    <script src="src/services/services.comment.js"></script>
+    <script src="src/services/services.entity.js"></script>
+    <script src="src/services/services.js"></script>
+    <script src="src/services/services.node.js"></script>
+    <script src="src/services/services.system.js"></script>
+    <script src="src/services/services.taxonomy_term.js"></script>
+    <script src="src/services/services.taxonomy_vocabulary.js"></script>
+    <script src="src/services/services.user.js"></script>
+    <script src="src/taxonomy_term.js"></script>
+    <script src="src/taxonomy_vocabulary.js"></script>
+    <script src="src/user.js"></script>
+    
+    <!-- include tests -->
+    <script src="tests/services.comment.test.js"></script>
+    <script src="tests/services.node.test.js"></script>
+    <script src="tests/services.system.test.js"></script>
+    <script src="tests/services.taxonomy_term.test.js"></script>
+    <script src="tests/services.taxonomy_vocabulary.test.js"></script>
+    <script src="tests/services.user.test.js"></script>
+    <script>
+    function connect(){
+		 $().ready(function() {
+		 Drupal.settings.site_path = "http://m.reisandirvys.com"; // http://www.example.com
+      
+      // Set the Service Resource endpoint path.
+      Drupal.settings.endpoint = "rest";
+	   Drupal.settings.site_path = $('#site_path').val();
+            Drupal.settings.endpoint = $('#endpoint').val();
+		 });
+	}
+    
+    
+    </script>
+  </head>
+
+  <body onLoad="connect();">
+     <script type="text/javascript">
+      $().ready(function() {
+            // Set the site path (without the trailing slash).
+      Drupal.settings.site_path = "http://m.reisandirvys.com"; // http://www.example.com
+      
+      // Set the Service Resource endpoint path.
+      Drupal.settings.endpoint = "rest";
+    
+          Drupal.settings.debug = true;
+            
+		function set_drupal_settings() {
+            Drupal.settings.site_path = $('#site_path').val();
+            Drupal.settings.endpoint = $('#endpoint').val();
+          }
+          // Set the site path.
+          Drupal.settings.site_path = window.location.href.replace(
+           /* '/sites/all/libraries/jDrupal/',
+            ''*/
+			 '/javascript-application/',
+            ''
+          ).replace('index.html', '');
+          $('#site_path').val(Drupal.settings.site_path);
+		   $('#endpoint').val(Drupal.settings.endpoint);
+          
+		  set_drupal_settings();
+		  
+           $('#go').on('click', function(){
+             
+              if (Drupal.settings.site_path == '') {
+                alert('Enter a site path!');
+                return false;
+              }
+              if (Drupal.settings.endpoint == '') {
+                alert('Enter an endpoint path!');
+                return false;
+              }
+			
+			 
+			/* function Checker(){
+              
+              if (Drupal.settings.site_path == '') {
+                alert('Enter a site path!');
+                return false;
+              }
+              if (Drupal.settings.endpoint == '') {
+                alert('Enter an endpoint path!');
+                return false;
+              }*/
+			 
+			  
+              system_connect({
+                  success:function(result){
+					$('#connect_wrapper').hide();
+					 $('#connect2_wrapper').hide();
+                      $('#login_name_wrapper').show('slow');
+                    $('#login_pass_wrapper').show('slow');
+					 $('#login').show();
+					  $('#logout').hide();
+                    if (result.user.uid != 0) {
+					
+					$('#login_name_wrapper').hide();
+                    $('#login_pass_wrapper').hide();
+					$('#footer').show('slow');
+					 $('#login').hide();
+                      $('#logout').show();
+                      $('#go').hide();
+					   $('#run_nodes').show('slow');
+                      //if (Drupal.user.uid == 0) {
+					if (result.user.uid == 0) {
+						
+					$('#login').show();
+					$('#logout').hide();
+                       
+                      }
+                      else {
+                       // alert('Only user #1 can perform tests, your are user # ' + Drupal.user.uid + '!');
+					   // alert('Please Sign in');
+                      }
+                    }
+                    else {
+                      $('#login').show('slow');
+                      $('#go').hide();
+                    }
+                  },
+                  error:function(xhr, status, message){
+                    alert(message);
+                  }
+				  
+              });
+              return false;
+          });
+		
+           Checker();
+		   
+          $('#login').on('click', function(){
+              set_drupal_settings();
+              user_login($('#login_name').val(), $('#login_pass').val(), {
+                  success:function(result){
+                    alert('Hi, ' + result.user.name + '!');
+                    $('#login').hide();
+                    $('#logout').show('slow');
+                    $('#run_nodes').show('slow');
+					 $('#footer').show('slow');
+                  },
+                  error:function(xhr, status, message){
+                    alert(message);
+                  }
+              });
+              return false;
+          });
+          
+          $('#logout').on('click', function(){
+              user_logout({
+                  success:function(result){
+                    if (result[0]) {
+                       alert("Logged out!");
+					    $('#login_name_wrapper').show('slow');
+                    $('#login_pass_wrapper').show('slow');
+                       $('#login').show('slow');
+                       $('#run_nodes').hide();
+                       $('#logout').hide();
+                    }
+                  }
+              });
+              return false;
+          });
+           set_drupal_settings();
+        /*  function set_drupal_settings() {
+            Drupal.settings.site_path = $('#site_path').val();
+            Drupal.settings.endpoint = $('#endpoint').val();
+          }*/
+          
+         /* $('#run_tests').on('click', function(){
+              if ($('#login_name').val() == '') {
+                alert('Enter your user name to run tests!');
+                return false;
+              }
+              if ($('#login_pass').val() == '') {
+                alert('Enter your password to run tests!');
+                return false;
+              }
+              set_drupal_settings();
+              test_services_system();
+              // this call iterates through other tests
+              test_services_user($('#login_name').val(), $('#login_pass').val());
+              return false;
+          });*/
+		   $('#run_nodes').on('click', function(){
+              if ($('#login_name').val() == '') {
+                alert('Enter your user name to run tests!');
+                return false;
+              }
+              if ($('#login_pass').val() == '') {
+                alert('Enter your password to run tests!');
+                return false;
+              }
+              set_drupal_settings();
+              //services_node();
+			   services_term();
+			  //taxonomy_term_load();
+			   
+			  
+			 
+              // this call iterates through other tests
+           // user_load($('#login_name').val(), $('#login_pass').val());
+              return false;
+          });
+		  
+			/*	function taxonomy_term_load() {
+			  try {
+				// Grab some recent content and display it.
+				 entity_load(
+				  'rest/social', {
+					success: function(content) {
+					  // Extract the nodes into items, then drop them in the list.
+					  var items = [];
+					  $.each(content.nodes, function(index, object) {
+						  items.push(l(object.node.title, 'node/' + object.node.nid));
+					  });
+					  drupalgap_item_list_populate('#message', items);
+					}
+				  }
+				);
+			  }
+			  catch (error) { console.log('node_page_pageshow - ' + error); }
+			}
+*/
+
+
+
+
+		  function services_term(){
+			  
+				/*		  node_load(5, {
+					success: function(node) {
+					 // alert('Loaded node: ' + node.title);
+					  $("#messages").html("Loaded node: " + node.title);
+					  $("#image").html("Loaded node: " + field_shout_image.filename);
+					},
+					error: function(xhr, status, message) {
+					  alert(message)
+					}
+				});*/
+				
+				taxonomy_vocabulary_load(2, {
+						success:function(taxonomy_vocabulary) {
+						$("#messages").html("Loaded node: " + taxonomy_vocabulary.name);
+					   $("#image").html("Loaded node: " + taxonomy_vocabulary.filename);
+					
+						  console.log('Loaded vocabulary: ' + taxonomy_vocabulary.name);
+						}
+					});
+				
+					  
+
+		  }
+      });
+    </script>
+    <div data-role="page" id="jdrupal">
+      <div data-role="header">
+        <h1>Love Froyo</h1>
+      </div><!-- header -->
+      <div id="navigation"></div>
+      <div data-role="content" class='content'>
+        <div data-role="fieldcontain" id="connect_wrapper">
+          <label for="site_path">Drupal Path</label>
+          <input type="text" id="site_path" value="" />
+        </div>
+        <div data-role="fieldcontain" id="connect2_wrapper">
+          <label for="endpoint">Services Endpoint Path</label>
+          <input type="text" id="endpoint" value="" />
+        </div>
+        <div data-role="fieldcontain" id="login_name_wrapper" style="display: none;">
+          <label for="login_name">Username</label>
+          <input type="text" id="login_name" value="" />
+        </div>
+        <div data-role="fieldcontain" id="login_pass_wrapper" style="display: none;">
+          <label for="login_pass">Password</label>
+          <input type="password" id="login_pass" />
+        </div>
+        <fieldset>
+          <div><button type="submit" id="go">Connect</button></div>
+          <div><button type="submit" id="login" style="display: none;">Login</button></div>
+          <div><button type="submit" id="logout" style="display: none;">Logout</button></div>
+          <div><button type="submit" id="run_tests" style="display: none;">Run Tests</button></div>
+           <div><button type="submit" id="run_nodes" style="display: none;">Nodes</button></div>
+        </fieldset>
+      <!--  <div id="messages">Message</div>
+        <div id="image">Image</div>-->
+        <!--<div id="qunit"></div>
+        <ol id="qunit-tests"></ol>
+        <div id="qunit-fixture"></div>-->
+      </div><!-- /content -->
+      <div data-role="footer" id="footer" style="display: none;">
+      
+      <!-- <ul id="btn-list-header">
+			<li class="ui-btn-inner">
+			<a href="#nav-panel"><i class="step menu fi-align-justify size-36"></i></a>
+			</li>
+			<li class="ui-btn-inner">
+			<a href="/social"><i class="step menu fi-share size-36"></i></a>
+			</li>
+			<li class="ui-btn-inner">
+			<a href="/shout"><i class="step menu fi-comment size-36"></i></a>
+			</li>
+			<li class="ui-btn-inner">
+			<a href="/what"><i class="step menu fi-burst-new size-36"></i></a>
+			</li>
+			<li class="ui-btn-inner">
+			<a href="/vote"><i class="step menu fi-checkbox size-36"></i></a>
+			</li>
+		</ul>-->
+         <ul id="btn-list-footer">
+			<li class="ui-btn-inner">
+			<a href="#nav-panel">nav</a>
+			</li>
+			<li class="ui-btn-inner">
+			<a href="/social">Social</a>
+			</li>
+			<li class="ui-btn-inner">
+			<a href="/shout">ShoutOut</a>
+			</li>
+			<li class="ui-btn-inner">
+			<a href="/what">What's New</a>
+			</li>
+			<li class="ui-btn-inner">
+			<a href="/vote">Vote</a>
+			</li>
+		</ul>
+      
+      </div><!-- /footer -->
+    </div><!-- /page -->
+    
+   
+    
+  </body>
+</html>
