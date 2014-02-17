@@ -147,8 +147,8 @@
           ).replace('index.html', '');
           $('#site_path').val(Drupal.settings.site_path);
           
-         /* $('#go').on('click', function(){*/
-		 	function checksyscon(){
+          $('#go').on('click', function(){
+		 
               set_drupal_settings();
               if (Drupal.settings.site_path == '') {
                 alert('Enter a site path!');
@@ -185,9 +185,9 @@
               });
 			  
               return false;
-         /* });*/
-		 };
-          checksyscon();
+          });
+	
+   
 		  
           $('#login').on('click', function(){
               set_drupal_settings();
