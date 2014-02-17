@@ -1,0 +1,8 @@
+/* CSS Document */
+.ui-header:empty, .ui-footer:empty {
+    bottom: -10px;
+    left: 0px;
+    min-height: 2.6875em;
+    position: fixed;
+}
+
