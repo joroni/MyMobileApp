@@ -47,9 +47,10 @@
 		 Drupal.settings.site_path = "http://m.reisandirvys.com"; // http://www.example.com
       
       // Set the Service Resource endpoint path.
-      Drupal.settings.endpoint = "rest";
+      	Drupal.settings.endpoint = "rest";
 	   Drupal.settings.site_path = $('#site_path').val(Drupal.settings.site_path);
-            Drupal.settings.endpoint = $('#endpoint').val(Drupal.settings.endpoint);
+       Drupal.settings.endpoint = $('#endpoint').val(Drupal.settings.endpoint);
+		
 		 });
 	}
     
@@ -115,19 +116,19 @@
 		</ul>-->
          <ul id="btn-list-footer">
 			<li class="ui-btn-inner">
-			<a href="#nav-panel">nav</a>
+			<a href="#nav-panel">Nav</a>
 			</li>
 			<li class="ui-btn-inner">
-			<a href="/social">Social</a>
+			<a href="http://m.reisandirvys.com/social">Social</a>
 			</li>
 			<li class="ui-btn-inner">
-			<a href="/shout">ShoutOut</a>
+			<a href="http://m.reisandirvys.com/shout">ShoutOut</a>
 			</li>
 			<li class="ui-btn-inner">
-			<a href="/what">What's New</a>
+			<a href="base_path/what">What's New</a>
 			</li>
 			<li class="ui-btn-inner">
-			<a href="/vote">Vote</a>
+			<a href="base_path/vote">Vote</a>
 			</li>
 		</ul>
       
@@ -146,7 +147,8 @@
           ).replace('index.html', '');
           $('#site_path').val(Drupal.settings.site_path);
           
-          $('#go').on('click', function(){
+         /* $('#go').on('click', function(){*/
+		 	function checksyscon(){
               set_drupal_settings();
               if (Drupal.settings.site_path == '') {
                 alert('Enter a site path!');
@@ -181,8 +183,10 @@
                     alert(message);
                   }
               });
+			  checksyscon();
               return false;
-          });
+         /* });*/
+		 };
           
           $('#login').on('click', function(){
               set_drupal_settings();
@@ -191,7 +195,7 @@
                     alert('Hi, ' + result.user.name + '!');
                     $('#login').hide();
                     $('#logout').show('slow');
-                    $('#run_tests').show('slow');
+                    $('#run_tests').hide();
                   },
                   error:function(xhr, status, message){
                     alert(message);
