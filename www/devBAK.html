@@ -22,7 +22,6 @@
     <script src="src/taxonomy_term.js"></script>
     <script src="src/taxonomy_vocabulary.js"></script>
     <script src="src/user.js"></script>
-    <script src="bin/jdrupal.js"></script>
     
   </head>
 
@@ -41,17 +40,24 @@
       Drupal.settings.endpoint = "rest";
     
       function hello_world() {
-        
+       // Perform a System Connect call.
         system_connect({
             success:function(result){
-              if (Drupal.user.uid != 0) {
-                
-              }
+              
+              // Place custom code here...
+              
+              if (Drupal.user.uid == 0) { message = "Hello World, Visitor!"; }
+              else { message = "Hello World, " + Drupal.user.name + "!"; }
+              document.getElementById("message").innerHTML = message;
+              
+            },
+            error:function(xhr, status, message) {
+              alert(message);
             }
         });
         
       }
-    
+	  
     </script>
     
   </body>

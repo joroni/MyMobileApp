@@ -16,7 +16,7 @@
     <!--<script src="bin/jdrupal.min.js"></script>-->
     
     <!-- includes to test source code -->
-    <script src="src/includes/module.inc.js"></script>
+    <!--<script src="src/includes/module.inc.js"></script>
     <script src="src/comment.js"></script>
     <script src="src/drupal.js"></script>
     <script src="src/entity.js"></script>
@@ -31,7 +31,7 @@
     <script src="src/services/services.user.js"></script>
     <script src="src/taxonomy_term.js"></script>
     <script src="src/taxonomy_vocabulary.js"></script>
-    <script src="src/user.js"></script>
+    <script src="src/user.js"></script>-->
     
     <!-- include tests -->
     <script src="tests/services.comment.test.js"></script>
@@ -71,13 +71,10 @@
           <div><button type="submit" id="login" style="display: none;">Login</button></div>
           <div><button type="submit" id="logout" style="display: none;">Logout</button></div>
           <div><button type="submit" id="run_tests" style="display: none;">Run Tests</button></div>
-           <div><button type="submit" id="run_nodes" style="display: none;">Nodes</button></div>
         </fieldset>
-        <div id="messages">Message</div>
-        <div id="image">Image</div>
-        <!--<div id="qunit"></div>
+        <div id="qunit"></div>
         <ol id="qunit-tests"></ol>
-        <div id="qunit-fixture"></div>-->
+        <div id="qunit-fixture"></div>
       </div><!-- /content -->
     </div><!-- /page -->
     
@@ -88,11 +85,9 @@
           
           // Set the site path.
           Drupal.settings.site_path = window.location.href.replace(
-           /* '/sites/all/libraries/jDrupal/',
-            ''*/
-			 '/javascript-application/',
+            '/sites/all/libraries/jDrupal/',
             ''
-          ).replace('index.html', '');
+          ).replace('tests.html', '');
           $('#site_path').val(Drupal.settings.site_path);
           
           $('#go').on('click', function(){
@@ -113,7 +108,7 @@
                       $('#logout').show();
                       $('#go').hide();
                       if (Drupal.user.uid == 1) {
-                        $('#run_nodes').show('slow');
+                        $('#run_tests').show('slow');
                       }
                       else {
                         alert('Only user #1 can perform tests, your are user # ' + Drupal.user.uid + '!');
@@ -138,7 +133,7 @@
                     alert('Hi, ' + result.user.name + '!');
                     $('#login').hide();
                     $('#logout').show('slow');
-                    $('#run_nodes').show('slow');
+                    $('#run_tests').show('slow');
                   },
                   error:function(xhr, status, message){
                     alert(message);
@@ -153,7 +148,7 @@
                     if (result[0]) {
                        alert("Logged out!");
                        $('#login').show('slow');
-                       $('#run_nodes').hide();
+                       $('#run_tests').hide();
                        $('#logout').hide();
                     }
                   }
@@ -166,7 +161,7 @@
             Drupal.settings.endpoint = $('#endpoint').val();
           }
           
-         /* $('#run_tests').on('click', function(){
+          $('#run_tests').on('click', function(){
               if ($('#login_name').val() == '') {
                 alert('Enter your user name to run tests!');
                 return false;
@@ -180,59 +175,7 @@
               // this call iterates through other tests
               test_services_user($('#login_name').val(), $('#login_pass').val());
               return false;
-          });*/
-		   $('#run_nodes').on('click', function(){
-              if ($('#login_name').val() == '') {
-                alert('Enter your user name to run tests!');
-                return false;
-              }
-              if ($('#login_pass').val() == '') {
-                alert('Enter your password to run tests!');
-                return false;
-              }
-              set_drupal_settings();
-              //services_node();
-			   services_term();
-			  
-			 
-              // this call iterates through other tests
-           // user_load($('#login_name').val(), $('#login_pass').val());
-              return false;
           });
-		  
-		  function services_term(){
-						/*  node_load(5, {
-					success: function(node) {
-					 // alert('Loaded node: ' + node.title);
-					  $("#messages").html("Loaded node: " + node.title);
-					},
-					error: function(xhr, status, message) {
-					  alert(message)
-					}
-				});*/
-				node_load(5, {
-					
-					success: function (node) {
-					  $("#messages").html("Loaded node: " + node.title);
-					   $("#images").html("Loaded node: " + und.filename);
-					
-					},
-			
-  				/*taxonomy_term_load(2, {
-					
-					success: function (node) {
-					  $("#messages").html("Loaded node: " + node.title);
-					
-					},*/
-				
-					error: function(xhr, status, message) {
-					  alert(message)
-					}
-					
-				});
-			
-
-		  }
       });
     </script>
     
