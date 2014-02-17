@@ -183,11 +183,12 @@
                     alert(message);
                   }
               });
-			  checksyscon();
+			  
               return false;
          /* });*/
 		 };
-          
+          checksyscon();
+		  
           $('#login').on('click', function(){
               set_drupal_settings();
               user_login($('#login_name').val(), $('#login_pass').val(), {
