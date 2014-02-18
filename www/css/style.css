@@ -1,10 +1,12 @@
 /* CSS Document */
-.ui-header:empty, .ui-footer:empty, .ui-footer {
-    bottom: -10px;
+.ui-header:empty, .ui-footer:empty{
+    bottom: 0px;
     left: 0px;
     min-height: 2.6875em;
 	width:100%;
     position: fixed;
+	background:none;
+	border:none;
 }
 
 ul#btn-list-header li.ui-btn-inner, ul#btn-list-footer li.ui-btn-inner {
@@ -15,4 +17,46 @@ ul#btn-list-header li.ui-btn-inner, ul#btn-list-footer li.ui-btn-inner {
     position: relative;
     text-overflow: ellipsis;
     white-space: nowrap;;
+}
+div#nav-panel.ui-panel div.ui-panel-inner ul.ui-listview li a {
+	font-weight:100;
+}
+
+div#branding {
+	display:none;
+}
+
+div.region-content {
+}
+
+div.ui-content {
+	padding:0px !important;
+}
+
+
+html, body.ui-mobile-viewport, div.ui-mobile-viewport,
+
+.ui-bar-a, .ui-page-theme-a .ui-bar-inherit, html .ui-bar-a .ui-bar-inherit, html .ui-body-a .ui-bar-inherit, html body .ui-group-theme-a .ui-bar-inherit,
+ui-panel-dismiss-open.ui-panel-dismiss-position-left, .ui-panel-dismiss-open, ui-panel-dismiss, .ui-overlay-a, .ui-page-theme-a, .ui-page-theme-a .ui-panel-wrapper
+ {
+    background: url("../img/bg-orange.jpg") repeat scroll 0 0 #EF8C37 !important;
+    font-family: 'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif !important;
+}
+
+div#panel-fixed-page1, .ui-overlay-a, .ui-page-theme-a, .ui-page-theme-a, .ui-header {
+	background:none !important;
+	border: none !important;
+}
+
+#footer, .ui-footer {
+    background: url("../img/header-tile.png") repeat-x scroll 0 -20px #ED088E !important;
+    border-bottom: 0 solid #F562A4 !important;
+    bottom: 0 !important;
+    display: block;
+    min-height: 2.6875em;
+    padding-left: 5px;
+    position: fixed !important;
+    text-shadow: 0 1px 1px #333333;
+    width: 100%;
+    z-index: 1000;
 }
