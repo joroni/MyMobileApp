@@ -1,8 +1,18 @@
 /* CSS Document */
-.ui-header:empty, .ui-footer:empty {
+.ui-header:empty, .ui-footer:empty, .ui-footer {
     bottom: -10px;
     left: 0px;
     min-height: 2.6875em;
+	width:100%;
     position: fixed;
 }
 
+ul#btn-list-header li.ui-btn-inner, ul#btn-list-footer li.ui-btn-inner {
+    display: block;
+    float: left !important;
+    overflow: hidden;
+    padding: 8px 15px;
+    position: relative;
+    text-overflow: ellipsis;
+    white-space: nowrap;;
+}
