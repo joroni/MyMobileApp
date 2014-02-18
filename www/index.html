@@ -191,7 +191,7 @@
           
 		  set_drupal_settings();
 		  
-        /*   $('#go').on('click', function(){
+           $('#go').on('click', function(){
              
               if (Drupal.settings.site_path == '') {
                 alert('Enter a site path!');
@@ -200,11 +200,11 @@
               if (Drupal.settings.endpoint == '') {
                 alert('Enter an endpoint path!');
                 return false;
-              }*/
+              }
 			
 			 
-			 function Checker(){
-              
+			// function Checker(){
+              /*
               if (Drupal.settings.site_path == '') {
                 alert('Enter a site path!');
                 return false;
@@ -212,7 +212,7 @@
               if (Drupal.settings.endpoint == '') {
                 alert('Enter an endpoint path!');
                 return false;
-              }
+              }*/
 			 
 			  
               system_connect({
@@ -255,9 +255,9 @@
 				  
               });
               return false;
-      /*    });*/
-		};
-           Checker();
+          });
+	/*	};*/
+         //  Checker();
 		   
           $('#login').on('click', function(){
               set_drupal_settings();
@@ -395,13 +395,13 @@
         <!--<h1 id="title">Love Froyo</h1>-->
       </div><!-- header -->
       <div id="navigation"></div>
-      <div data-role="content" class='content' style="visibility:hidden;">
+      <div data-role="content" class='content' style="visibility:visible;">
         <div data-role="fieldcontain" id="connect_wrapper">
-          <label for="site_path">Drupal Path</label>
+        <!--  <label for="site_path">Drupal Path</label>-->
           <input type="text" id="site_path" value="" />
         </div>
-        <div data-role="fieldcontain" id="connect2_wrapper" style="visibility:hidden;">
-          <label for="endpoint">Services Endpoint Path</label>
+        <div data-role="fieldcontain" id="connect2_wrapper" style="visibility:visible;">
+        <!--  <label for="endpoint">Services Endpoint Path</label>-->
           <input type="text" id="endpoint" value="" />
         </div>
         <div data-role="fieldcontain" id="login_name_wrapper" style="display: none;">
@@ -413,14 +413,14 @@
           <input type="password" id="login_pass" />
         </div>
         <fieldset>
-          <div><button type="submit" id="go" style="visibility:hidden;">Connect</button></div>
+          <div><button type="submit" id="go" style="visibility:visible;">Connect</button></div>
           <div><button type="submit" id="login" style="display: none;">Login</button></div>
           <!--<div><button type="submit" id="logout" style="display: none;">Logout</button></div>-->
           <div><button type="submit" id="run_tests" style="display: none;">Run Tests</button></div>
            <div><button type="submit" id="run_nodes" style="display: none;">Nodes</button></div>
         </fieldset>
-        <div id="sitelogo" style="margin:100px auto; text-align:center; visibility:visible;">
-        <img src="logo.png" />
+        <div id="sitelogo" style="margin:50px auto; text-align:center; visibility:visible;">
+        <img src="logo.png" style="width:200px" />
         </div>
       <!--  <div id="messages">Message</div>
         <div id="image">Image</div>-->
