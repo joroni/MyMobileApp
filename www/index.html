@@ -3,6 +3,7 @@
 
   <head>
     <title>Love Froyo</title>
+    <meta name="format-detection" content="telephone=yes" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <link rel="shortcut icon" href="logo.png" type="image/png" />
@@ -395,12 +396,13 @@
         <!--<h1 id="title">Love Froyo</h1>-->
       </div><!-- header -->
       <div id="navigation"></div>
-      <div data-role="content" class='content' style="visibility:visible;">
+      <div data-role="content" class='content' style="visibility:hidden;">
         <div data-role="fieldcontain" id="connect_wrapper">
         <!--  <label for="site_path">Drupal Path</label>-->
           <input type="text" id="site_path" value="" />
         </div>
-        <div data-role="fieldcontain" id="connect2_wrapper" style="visibility:visible;">
+        <div id="sitelogo" style="margin:50px auto; text-align:center; visibility:visible;"><img src="logo.png" style="width:200px" /></div>
+        <div data-role="fieldcontain" id="connect2_wrapper" style="visibility:hidden;">
         <!--  <label for="endpoint">Services Endpoint Path</label>-->
           <input type="text" id="endpoint" value="" />
         </div>
@@ -413,15 +415,13 @@
           <input type="password" id="login_pass" />
         </div>
         <fieldset>
-          <div><button type="submit" id="go" style="visibility:visible;">Connect</button></div>
+          <div style="margin:0 auto; width:200px"><button type="submit" id="go" style="visibility:visible; ">Hop in</button></div>
           <div><button type="submit" id="login" style="display: none;">Login</button></div>
           <!--<div><button type="submit" id="logout" style="display: none;">Logout</button></div>-->
           <div><button type="submit" id="run_tests" style="display: none;">Run Tests</button></div>
            <div><button type="submit" id="run_nodes" style="display: none;">Nodes</button></div>
         </fieldset>
-        <div id="sitelogo" style="margin:50px auto; text-align:center; visibility:visible;">
-        <img src="logo.png" style="width:200px" />
-        </div>
+        
       <!--  <div id="messages">Message</div>
         <div id="image">Image</div>-->
         <!--<div id="qunit"></div>
@@ -484,7 +484,7 @@
                 <li><a href="#" onClick="listWhat();">What's New</a></li>
                 <li><a href="#" onClick="listVote();">Vote</a></li>
                  <li><a href="#" onClick="suggest();">Vote</a></li>
-              <li data-icon="power"><a href="#" id="logout">Logout</a></li>
+              <li data-icon="power"><a href="#" id="logout" onClick="user_logout();">Logout</a></li>
                 
                 
         </ul>
