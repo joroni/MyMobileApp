@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Love Froyo</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="shortcut icon" href="logo.png" type="image/png" />
+   <!-- <link rel="stylesheet" type='text/css' href='css/jquery.mobile-1.4.0.min.css' />
+    <link rel="stylesheet" type='text/css' href='css/jqm-demos.css' />
+    <link rel='stylesheet' type='text/css' href='css/qunit-1.12.0.css' />
+    <link rel='stylesheet' type='text/css' href='css/style.css' />
+    <script src="js/jquery-1.9.1.min.js"></script>
+    <script src="js/jquery.mobile-1.4.0.min.js"></script>
+    <script type='text/javascript' src='js/qunit-1.12.0.js'></script>-->
+    
+    <link rel="stylesheet" type='text/css' href='css/jqm-demos.css' />
+     <link rel='stylesheet' type='text/css' href='css/style.css' />
+      <link rel="stylesheet" type='text/css' href="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.css" />
+    <link rel='stylesheet' type='text/css' href='http://code.jquery.com/qunit/qunit-1.12.0.css' />
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.js"></script>
+    <script type='text/javascript' src='http://code.jquery.com/qunit/qunit-1.12.0.js'></script>
+   
+    <!-- include to test binary -->
+     <!--   <script src="bin/jdrupal.js"></script>-->
+    <script src="bin/jdrupal-7.x-1.0-rc2.js"></script>
+ <!--    <script src="bin/jdrupal.min.js"></script> -->
+  <script src="src/base.js"></script>  
+    <!-- includes to test source code -->
+    <script src="src/includes/module.inc.js"></script>
+    <script src="src/comment.js"></script>
+    <script src="src/drupal.js"></script>
+    <script src="src/entity.js"></script>
+    <script src="src/node.js"></script>
+    <script src="src/services/services.comment.js"></script>
+    <script src="src/services/services.entity.js"></script>
+    <script src="src/services/services.js"></script>
+    <script src="src/services/services.node.js"></script>
+    <script src="src/services/services.system.js"></script>
+    <script src="src/services/services.taxonomy_term.js"></script>
+    <script src="src/services/services.taxonomy_vocabulary.js"></script>
+    <script src="src/services/services.user.js"></script>
+    <script src="src/taxonomy_term.js"></script>
+    <script src="src/taxonomy_vocabulary.js"></script>
+    <script src="src/user.js"></script>
+    
+    <!-- include tests -->
+    <script src="tests/services.comment.test.js"></script>
+    <script src="tests/services.node.test.js"></script>
+    <script src="tests/services.system.test.js"></script>
+    <script src="tests/services.taxonomy_term.test.js"></script>
+    <script src="tests/services.taxonomy_vocabulary.test.js"></script>
+    <script src="tests/services.user.test.js"></script>
+    <script id="popup-arrow-script">
+	$.mobile.document.on( "click", "#open-popupArrow", function( evt ) {
+		$( "#popupArrow" ).popup( "open", { x: evt.pageX, y: evt.pageY } );
+		evt.preventDefault();
+	});
+	</script>
+	<style id="popup-arrow-css">
+	.clickable-area {
+		display: block;
+		width: 100%;
+		height: 300px;
+		background-color: #ffefef;
+	}
+	.clickable-area:focus {
+		outline: 0;
+	}
+	</style>
+	<style id="tooltip-btn">
+	.ui-btn.my-tooltip-btn,
+	.ui-btn.my-tooltip-btn:hover,
+	.ui-btn.my-tooltip-btn:active {
+		background: none;
+		border: 0;
+	}
+	</style>
+	   <!-- jQuery Plugin -->
+	<!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js"></script>-->
+<!-- Preloader -->
+	<script type="text/javascript">
+		//<![CDATA[
+		
+			$(window).load(function() { // makes sure the whole site is loaded
+				$('#status').fadeOut(); // will first fade out the loading animation
+				$('#preloader').delay(350).fadeOut('slow'); // will fade out the white DIV that covers the website.
+				$('body').delay(350).css({'overflow':'visible'});
+			})
+		
+		//]]>
+		
+		
+	</script> 
+
+	<script>
+	  function connect(){
+		 $().ready(function() {
+		 Drupal.settings.site_path = "http://m.reisandirvys.com"; // http://www.example.com
+      
+      // Set the Service Resource endpoint path.
+      Drupal.settings.endpoint = "rest";
+	  $('#site_path').val(Drupal.settings.site_path);
+             $('#endpoint').val(Drupal.settings.endpoint);
+		 });
+	}
+      </script>
+    
+     <script>
+
+	  /********************** SOCIAL PAGE **************************/
+	  /* $('#social').on('click', function(){
+		  //$('#social').live('pageshow',function(){
+				  try {
+					$.ajax({
+					  url: "http://m.reisandirvys.com/social",
+					  type: 'get',
+					  dataType: 'json',
+					  error: function (XMLHttpRequest, textStatus, errorThrown) {
+						alert('page_node_pages - failed to retrieve pages');
+						console.log(JSON.stringify(XMLHttpRequest));
+						console.log(JSON.stringify(textStatus));
+						console.log(JSON.stringify(errorThrown));
+					  },
+					  success: function (data) {
+						$("#latestlist").html("");
+						$.each(data.nodes,function (node_index,node_value) {
+						  console.log(JSON.stringify(node_value));
+						  $("#latestlist").append($("<li></li>",{"html":"<a href='#page_node_view' id='" + node_value.node.nid + "' class='page_node_pages_list_title'>" + node_value.node.title + "</a>"}));
+						});
+						$("#latestlist").listview("destroy").listview();
+					  }
+					});
+				  }
+				  catch (error) { alert("page_node_pages - " + error); }
+				});
+				
+				$('a.page_node_pages_list_title').on("click",function(){
+				  nid = $(this).attr('id'); // set the global nid to the node that was just clicked
+				});*/
+	 // var baseurl = Drupal.settings.site_path;
+	
+		function listSocial() {
+				 /*Drupal.settings.site_path = window.location.href.replace('/javascript-application/','').replace('index.html', '');
+				$.ajax({*/
+			/*node_load(5, {
+			
+				url: '/rest/shout',
+				type: 'get',
+				data: {
+					view_name: 'Shout-outs',
+					view_display_id: '5',
+					per_page: 1,
+					page: 1
+				},
+				dataType: 'json',
+				success: function (response) {
+					if (response[1] !== undefined) {
+						
+						var viewHtml = response[1].data;
+						$('#latestlist').append(viewHtml);
+						//$('#latestlist').append(node.title);
+						Drupal.attachBehaviors();
+					}
+					
+				}
+			});*/
+			 /* $("#latestlist").append($("<li></li>",{"html":"<a href='#page_node_view' id='" + node_value.node.nid + "' class='page_node_pages_list_title'>" + node_value.node.title + "</a>"}));*/
+						
+		
+				node_load(3, {
+					success: function(node) {
+					 // alert('Loaded node: ' + node.title);
+					  $("#title").html(node.title);
+					  $("#banner").html("<img src='" +node.path+"'/>");
+					   
+					 //  $image_field_values = field_get_items('node', $new_node, 'field_image');
+					   // $("#latestlist").html(node.field_get_items('node', 'field_image'));
+					 // $("#image").html("Loaded node: " + field_shout_image.filename);
+					},
+					error: function(xhr, status, message) {
+					  alert(message)
+					}
+				});
+				
+				
+		/*	node_load(3, {
+				success:function(node) {
+					 if (node.length == 0) { return; }
+					  var data = node[0];
+					  
+					$("#latestlist").html(data);
+				  console.log('Loaded node: ' + node.title);
+				
+				//'path': baseurl + '/rest/social',
+				//path: "http://m.reisandirvys.com/rest/",
+			
+				  
+				
+			
+				}
+			});*/
+			/*function views_datasource_get_view_result(path, options)  {
+			 try {
+					$.ajax({
+					  path: "http://m.reisandirvys.com/rest/social",
+					  type: 'get',
+					  dataType: 'json',
+					  error: function (XMLHttpRequest, textStatus, errorThrown) {
+						alert('page_node_pages - failed to retrieve pages');
+						console.log(JSON.stringify(XMLHttpRequest));
+						console.log(JSON.stringify(textStatus));
+						console.log(JSON.stringify(errorThrown));
+					  },
+					  success: function (data) {
+						$("#latestlist").html("");
+						$.each(data.nodes,function (node_index,node_value) {
+						  console.log(JSON.stringify(node_value));
+						  $("#latestlist").append($("<li></li>",{"html":"<a href='#page_node_view' id='" + node_value.node.nid + "' class='page_node_pages_list_title'>" + node_value.node.title + "</a>"}));
+						});
+						$("#latestlist").html(data);
+						//$("#latestlist").listview("destroy").listview();
+					  }
+					});
+				  }
+				  catch (error) { alert("page_node_pages - " + error); }
+				//});
+		}*/
+			
+			/*var query = {
+			  fields:['1'],
+			  parameters:{
+				'name':'social',
+				'path': baseurl + '/rest/social'
+			  }
+			};
+			taxonomy_term_load(1, {
+				success:function(terms){
+				  if (terms.length == 0) { return; }
+				  var term = terms[0];
+				  $("#field_social_image").html(data);
+				  alert('Loaded vocabulary #' + term.tid);
+				}
+			});*/
+			/*url = baseurl + '/rest/social';
+			user_load($('#login_name').val(), $('#login_pass').val());
+			$username = '';
+			$("#field_social_image").html("Retrieving...");
+			$.post(url, {
+				//name : $username ,
+				//view : localStorage.view,
+				//display : localStorage.display
+			}, function(data) {
+				if (data == '') {
+					data = "you must <br/><br/>enable the view in drupal <br/><br/>set the mobile settings page (below)<br/><br/>enable the default views frontage is good starting point "
+				};
+				$("#field_social_image").html(data);
+		
+			});
+			$.mobile.changePage("#social");*/
+		}
+		/********************** END SOCIAL PAGE **************************/
+	</script>
+  </head>
+
+  <body onLoad="connect();">
+  <!-- Preloader -->
+	<div id="preloader">
+		<div id="status"><!--<img src="img/preloader.gif" width="64" height="64" style="top:50%; left:50%;">--></div>
+	</div>
+
+     <script type="text/javascript">
+      $().ready(function() {
+		  
+            // Set the site path (without the trailing slash).
+      Drupal.settings.site_path = "http://m.reisandirvys.com"; // http://www.example.com
+      
+      // Set the Service Resource endpoint path.
+      Drupal.settings.endpoint = "rest";
+    
+          Drupal.settings.debug = true;
+            
+		function set_drupal_settings() {
+            Drupal.settings.site_path = $('#site_path').val();
+            Drupal.settings.endpoint = $('#endpoint').val();
+          }
+          // Set the site path.
+          Drupal.settings.site_path = window.location.href.replace(
+           /* '/sites/all/libraries/jDrupal/',
+            ''*/
+			 '/javascript-application/',
+            ''
+          ).replace('index.html', '');
+          /*$('#site_path').val(Drupal.settings.site_path);
+		   $('#endpoint').val(Drupal.settings.endpoint);*/
+          
+		  set_drupal_settings();
+		  
+           $('#go').on('click', function(){
+             $('#preloader').show();
+		  	$('#status').show(); 
+              if (Drupal.settings.site_path == '') {
+                alert('Enter a site path!');
+                return false;
+              }
+              if (Drupal.settings.endpoint == '') {
+                alert('Enter an endpoint path!');
+                return false;
+              }
+			
+			 
+			/* function Checker(){
+              
+              if (Drupal.settings.site_path == '') {
+                alert('Enter a site path!');
+                return false;
+              }
+              if (Drupal.settings.endpoint == '') {
+                alert('Enter an endpoint path!');
+                return false;
+              }
+			 */
+			  
+              system_connect({
+                  success:function(result){
+					   $('#preloader').fadeOut();
+					  $('#status').fadeOut();
+					$('#connect_wrapper').hide();
+					 $('#connect2_wrapper').hide();
+                      $('#login_name_wrapper').show('slow');
+                    $('#login_pass_wrapper').show('slow');
+					 $('#login').show();
+					  $('#logout').hide();
+                    if (result.user.uid != 0) {
+					
+					
+					$('#login_name_wrapper').hide();
+                    $('#login_pass_wrapper').hide();
+					$('#footer').show('slow');
+					$('#navmenu').show('slow');
+					 $('#login').hide();
+                      $('#logout').show();
+                      $('#go').hide();
+					   $('#run_nodes').hide();
+                      //if (Drupal.user.uid == 0) {
+					if (result.user.uid == 0) {
+					$('#login').show();
+					$('#logout').hide();
+                       
+                      }
+                      /*else {
+                       // alert('Only user #1 can perform tests, your are user # ' + Drupal.user.uid + '!');
+					    alert('Please Sign in');
+						
+                      }*/
+                    }
+                    else {
+						
+                      $('#login').show('slow');
+                      $('#go').hide();
+                    }
+                  },
+                  error:function(xhr, status, message){
+                    alert(message);
+                  }
+				  
+              });
+              return false;
+          });
+		/*};
+           Checker();*/
+		   
+          $('#login').on('click', function(){
+              set_drupal_settings();
+			    $('#preloader').show();
+					  $('#status').show();
+              user_login($('#login_name').val(), $('#login_pass').val(), {
+                  success:function(result){
+					 
+                    alert('Hi, ' + result.user.name + '!');
+                    $('#login').hide();
+					 $('#navmenu').show();
+					    $('#preloader').fadeOut();
+					  $('#status').fadeOut();
+					  $('#login_name_wrapper').hide();
+                    $('#login_pass_wrapper').hide();
+                    $('#logout').show('slow');
+                    $('#run_nodes').hide();
+					 $('#footer').show('slow');
+                  },
+                  error:function(xhr, status, message){
+                    alert(message);
+                  }
+              });
+              return false;
+          });
+          
+          $('#logout').on('click', function(){
+			    $('#preloader').show();
+					  $('#status').show();
+              user_logout({
+                  success:function(result){
+					    $('#preloader').fadeOut();
+					  $('#status').fadeOut();
+                    if (result[0]) {
+                       alert("Logged out!");
+					    $('#login_name_wrapper').show('slow');
+                    $('#login_pass_wrapper').show('slow');
+                       $('#login').show('slow');
+                       //$('#run_nodes').hide();
+                       $('#logout').hide();
+                    }
+                  }
+              });
+              return false;
+          });
+           set_drupal_settings();
+		   
+		   
+		  
+        /*  function set_drupal_settings() {
+            Drupal.settings.site_path = $('#site_path').val();
+            Drupal.settings.endpoint = $('#endpoint').val();
+          }*/
+          
+         /* $('#run_tests').on('click', function(){
+              if ($('#login_name').val() == '') {
+                alert('Enter your user name to run tests!');
+                return false;
+              }
+              if ($('#login_pass').val() == '') {
+                alert('Enter your password to run tests!');
+                return false;
+              }
+              set_drupal_settings();
+              test_services_system();
+              // this call iterates through other tests
+              test_services_user($('#login_name').val(), $('#login_pass').val());
+              return false;
+          });*/
+		   $('#run_nodes').on('click', function(){
+              if ($('#login_name').val() == '') {
+                alert('Enter your user name to run tests!');
+                return false;
+              }
+              if ($('#login_pass').val() == '') {
+                alert('Enter your password to run tests!');
+                return false;
+              }
+              set_drupal_settings();
+              //services_node();
+			   services_term();
+			  //taxonomy_term_load();
+			   
+			  
+			 
+              // this call iterates through other tests
+           // user_load($('#login_name').val(), $('#login_pass').val());
+              return false;
+          });
+		  
+			/*	function taxonomy_term_load() {
+			  try {
+				// Grab some recent content and display it.
+				 entity_load(
+				  'rest/social', {
+					success: function(content) {
+					  // Extract the nodes into items, then drop them in the list.
+					  var items = [];
+					  $.each(content.nodes, function(index, object) {
+						  items.push(l(object.node.title, 'node/' + object.node.nid));
+					  });
+					  drupalgap_item_list_populate('#message', items);
+					}
+				  }
+				);
+			  }
+			  catch (error) { console.log('node_page_pageshow - ' + error); }
+			}
+*/
+
+
+
+
+		  function services_term(){
+			  
+				/*		  node_load(5, {
+					success: function(node) {
+					 // alert('Loaded node: ' + node.title);
+					  $("#messages").html("Loaded node: " + node.title);
+					  $("#image").html("Loaded node: " + field_shout_image.filename);
+					},
+					error: function(xhr, status, message) {
+					  alert(message)
+					}
+				});*/
+				
+				taxonomy_vocabulary_load(2, {
+						success:function(taxonomy_vocabulary) {
+						$("#messages").html("Loaded node: " + taxonomy_vocabulary.name);
+					   $("#image").html("Loaded node: " + taxonomy_vocabulary.filename);
+					
+						  console.log('Loaded vocabulary: ' + taxonomy_vocabulary.name);
+						}
+					});
+				
+					  
+
+		  }
+		   
+		   
+      });
+    </script>
+    
+    
+   
+    <div data-url="panel-fixed-page1" data-role="page" class="jqm-demos" id="panel-fixed-page1" data-title="Love Froyo">
+      <div data-role="header">
+      <a href="#nav-panel" id="navmenu" class="ui-btn ui-btn-inline ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all" style="display:none;">Nav-Panel</a>
+        <!--<h1 id="title">Love Froyo</h1>-->
+      </div><!-- header -->
+      <div id="navigation"></div>
+        <div id="sitelogo" style="margin:50px auto; text-align:center; visibility:visible;"><img src="logo.png" style="width:200px" /></div>
+      <div data-role="content" class='content' style="visibility:visible; margin:0 auto; width:300px">
+        <div data-role="fieldcontain" id="connect_wrapper">
+       <!--   <label for="site_path">Server</label>-->
+          <input type="text" id="site_path" value=""  placeholder="Server URL"/>
+        </div>
+        <div data-role="fieldcontain" id="connect2_wrapper" style="visibility:visble;">
+          <!--<label for="endpoint">Service Name</label>-->
+          <input type="text" id="endpoint" value="" placeholder="Service Name" />
+        </div>
+        <div data-role="fieldcontain" id="login_name_wrapper" style="display: none;">
+        <!--  <label for="login_name">Username</label>-->
+          <input type="text" id="login_name" value="" placeholder="Username"/>
+        </div>
+        <div data-role="fieldcontain" id="login_pass_wrapper" style="display: none;">
+        <!--  <label for="login_pass">Password</label>-->
+          <input type="password" id="login_pass" placeholder="Password" />
+        </div>
+        <fieldset>
+         <div style="margin:0 auto; width:300px"><button type="submit" id="go" style="visibility:visible; ">Hop in</button></div>
+          <div><button type="submit" id="login" style="display: none;">Login</button></div>
+          <!--<div><button type="submit" id="logout" style="display: none;">Logout</button></div>-->
+          <div><button type="submit" id="run_tests" style="display: none;">Run Tests</button></div>
+           <div><button type="submit" id="run_nodes" style="display: none;">Nodes</button></div>
+        </fieldset>
+     
+      <!--  <div id="messages">Message</div>
+        <div id="image">Image</div>-->
+        <!--<div id="qunit"></div>
+        <ol id="qunit-tests"></ol>
+        <div id="qunit-fixture"></div>-->
+      </div><!-- /content -->
+      <div data-role="footer" id="footer" style="display: none;">
+      
+      <!-- <ul id="btn-list-header">
+			<li class="ui-btn-inner">
+			<a href="#nav-panel"><i class="step menu fi-align-justify size-36"></i></a>
+			</li>
+			<li class="ui-btn-inner">
+			<a href="/social"><i class="step menu fi-share size-36"></i></a>
+			</li>
+			<li class="ui-btn-inner">
+			<a href="/shout"><i class="step menu fi-comment size-36"></i></a>
+			</li>
+			<li class="ui-btn-inner">
+			<a href="/what"><i class="step menu fi-burst-new size-36"></i></a>
+			</li>
+			<li class="ui-btn-inner">
+			<a href="/vote"><i class="step menu fi-checkbox size-36"></i></a>
+			</li>
+		</ul>-->
+         <!--<ul id="btn-list-footer">
+			<li class="ui-btn-inner">
+			<a href="#nav-panel">nav</a>
+			</li>
+			<li class="ui-btn-inner">
+			<a onClick="listSocial();">Social</a>
+			</li>
+			<li class="ui-btn-inner">
+			<a href="/shout">ShoutOut</a>
+			</li>
+			<li class="ui-btn-inner">
+			<a href="/what">What's New</a>
+			</li>
+			<li class="ui-btn-inner">
+			<a href="/vote">Vote</a>
+			</li>
+		</ul>-->
+       <!-- <a href="#nav-panel" class="ui-btn ui-btn-inline ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all">Nav-Panel</a>-->
+     
+    
+      <a href="#social" onClick="listSocial();"  data-role="button" data-icon="tag" class="ui-btn ui-btn-inline ui-icon-tag ui-btn-icon-left ui-corner-all">Social</a>
+    <!--  <a href="#social"  data-role="button" data-icon="tag" class="ui-btn ui-btn-inline ui-icon-tag ui-btn-icon-left ui-corner-all">Social</a>-->
+     
+       <a href="#" onClick="listShout();"  data-role="button" data-icon="comment" class="ui-btn ui-btn-inline ui-icon-comment ui-btn-icon-left ui-corner-all">Shout Out</a>
+     
+      <a href="#" onClick="listWhat();"  data-role="button" data-icon="star"  class="ui-btn ui-btn-inline ui-icon-star ui-btn-icon-left ui-corner-all">What's New</a>
+     
+     <a href="#" onClick="listVote();"  data-role="button" data-icon="check" class="ui-btn ui-btn-inline ui-icon-check ui-btn-icon-left ui-corner-all">Vote</a>
+      
+      </div><!-- /footer -->
+       <div data-role="panel" data-position-fixed="true" data-display="push" data-theme="b" id="nav-panel">
+        <ul data-role="listview">
+            <li data-icon="delete"><a href="#" data-rel="close">Close menu</a></li>
+                <li><a href="#social" onClick="listSocial();" >Social</a></li>
+                <li> <a href="#" onClick="listShout();">Shout Out</a></li>
+                <li><a href="#" onClick="listWhat();">What's New</a></li>
+                <li><a href="#" onClick="listVote();">Vote</a></li>
+                 <li><a href="#" id="login" onClick="user_login();" style="display:none;">Sign in</a></li>
+              <li data-icon="power"><a href="#" id="logout" onClick="user_logout();" style="display:none;">Logout</a></li>
+                
+                
+        </ul>
+    </div><!-- /panel -->
+    </div><!-- /page -->
+    
+     <!-- Start of social page -->
+    <div data-role="page" id="social">
+      <div data-role="header" data-id="bhead" data-theme="e">
+        <h1 id="title">Social</h1>
+        <a href="#" data-icon="back" data-rel="back" class="ui-btn ui-btn-inline ui-btn ui-icon-back ui-btn-icon-notext ui-corner-all">Back</a>
+       <!-- <a href="#info" data-icon="info" class="ui-btn-right">Info</a>-->
+      </div>
+      <!-- /header -->
+ <div id="field_social_image;"></div>
+         <div id="banner" style="margin:0 auto; text-align:center; visibility:visible;">
+     <!--   <img src="http://www.m.reisandirvys.com/sites/default/files/styles/mobile_320x320/public/Social.png?itok=ulF572C0" style="width:100%"/>-->
+        </div>
+      
+      <div id = "latestlist" style="display:block;" data-role="content">
+        
+      </div>
+  
+      <!-- /content -->
+      <div id="navigation" style="position:fixed; bottom:6.9em; width:100%;">
+      <a href="#popupNested" data-rel="popup" data-transition="pop" class="ui-btn ui-btn-left ui-btn-inline ui-icon-comment ui-btn-icon-left ui-corner-all" style="width:150px;">See Comments</a>
+      <div data-role="popup" id="popupNested" data-theme="none">
+    <div data-role="collapsibleset" data-theme="b" data-content-theme="a" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" style="margin:0; width:250px;">
+        <div data-role="collapsible" data-inset="false">
+        <h2>This is great!</h2>
+            <ul data-role="listview">
+                <li><a href="#" data-rel="dialog">I aGree</a></li>
+                <li><a href="#" data-rel="dialog">Perfect</a></li>
+                <li><a href="#" data-rel="dialog">It's so cool</a></li>
+                <li><a href="#" data-rel="dialog">Thumbs up</a></li>
+            </ul>
+        </div><!-- /collapsible -->
+        <div data-role="collapsible" data-inset="false">
+        <h2>Cool</h2>
+            <ul data-role="listview">
+                <li><a href="#" data-rel="dialog">Awesome</a></li>
+                <li><a href="#" data-rel="dialog">This is what I'm looking for</a></li>
+                <li><a href="#" data-rel="dialog">Iguana</a></li>
+                <li><a href="#" data-rel="dialog">Mouse</a></li>
+            </ul>
+        </div><!-- /collapsible -->
+        <div data-role="collapsible" data-inset="false">
+        <h2>Great</h2>
+            <ul data-role="listview">
+                <li><a href="#" data-rel="dialog">Fish</a></li>
+                <li><a href="#" data-rel="dialog">Octopus</a></li>
+                <li><a href="#" data-rel="dialog">Shark</a></li>
+                <li><a href="#" data-rel="dialog">Starfish</a></li>
+            </ul>
+        </div><!-- /collapsible -->
+        <div data-role="collapsible" data-inset="false">
+        <h2>Kudos</h2>
+            <ul data-role="listview">
+                <li><a href="#" data-rel="dialog">....</a></li>
+                <li><a href="#" data-rel="dialog">YEs</a></li>
+                <li><a href="#" data-rel="dialog">Can I have another one?</a></li>
+                <li><a href="#" data-rel="dialog">Zebra</a></li>
+            </ul>
+        </div><!-- /collapsible -->
+    </div><!-- /collapsible set -->
+</div><!-- /popup -->
+<a href="#popupLogin" data-rel="popup" data-position-to="window" class="ui-btn ui-btn-right ui-btn-inline ui-icon-plus ui-btn-icon-left ui-corner-all" data-transition="pop" style="width:150px;">Comment</a>
+     
+<div data-role="popup" id="popupLogin" data-theme="a" class="ui-corner-all">
+    <form>
+        <div style="padding:10px 20px;">
+            <h3>Add Comment</h3>
+            <label for="un" class="ui-hidden-accessible">Username:</label>
+           <textarea cols="40" rows="8" name="textarea" id="textarea" data-theme="a"></textarea>
+            <!--<label for="pw" class="ui-hidden-accessible">Password:</label>
+            <input name="pass" id="pw" value="" placeholder="password" data-theme="a" type="password">-->
+            <button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Add</button>
+        </div>
+    </form>
+</div>
+      </div>
+      
+      
+
+
+      <div data-role="footer" data-position="fixed" data-id="bfoot" class="ui-bar" data-theme="e">
+       <!-- <a href="#settings" data-icon="gear" class="ui-btn-right">Settings</a>
+        <a id="footout" onMouseDown="Account();" data-role="button" data-icon="delete">Account</a>-->
+   
+     
+                  
+     
+    
+
+      
+      <!-- <ul id="btn-list-header">
+			<li class="ui-btn-inner">
+			<a href="#nav-panel"><i class="step menu fi-align-justify size-36"></i></a>
+			</li>
+			<li class="ui-btn-inner">
+			<a href="/social"><i class="step menu fi-share size-36"></i></a>
+			</li>
+			<li class="ui-btn-inner">
+			<a href="/shout"><i class="step menu fi-comment size-36"></i></a>
+			</li>
+			<li class="ui-btn-inner">
+			<a href="/what"><i class="step menu fi-burst-new size-36"></i></a>
+			</li>
+			<li class="ui-btn-inner">
+			<a href="/vote"><i class="step menu fi-checkbox size-36"></i></a>
+			</li>
+		</ul>-->
+         <!--<ul id="btn-list-footer">
+			<li class="ui-btn-inner">
+			<a href="#nav-panel">nav</a>
+			</li>
+			<li class="ui-btn-inner">
+			<a onClick="listSocial();">Social</a>
+			</li>
+			<li class="ui-btn-inner">
+			<a href="/shout">ShoutOut</a>
+			</li>
+			<li class="ui-btn-inner">
+			<a href="/what">What's New</a>
+			</li>
+			<li class="ui-btn-inner">
+			<a href="/vote">Vote</a>
+			</li>
+		</ul>-->
+       <!-- <a href="#nav-panel" class="ui-btn ui-btn-inline ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all">Nav-Panel</a>-->
+     
+    
+      <a href="#social" onClick="listSocial();"  data-role="button" data-icon="tag" class="ui-btn ui-btn-inline ui-icon-tag ui-btn-icon-left ui-corner-all">Social</a>
+     
+       <a href="#" onClick="listShout();"  data-role="button" data-icon="comment" class="ui-btn ui-btn-inline ui-icon-comment ui-btn-icon-left ui-corner-all">Shout Out</a>
+     
+      <a href="#" onClick="listWhat();"  data-role="button" data-icon="star"  class="ui-btn ui-btn-inline ui-icon-star ui-btn-icon-left ui-corner-all">What's New</a>
+     
+     <a href="#" onClick="listVote();"  data-role="button" data-icon="check" class="ui-btn ui-btn-inline ui-icon-check ui-btn-icon-left ui-corner-all">Vote</a>
+      
+      </div><!-- /footer -->
+      
+      
+     
+      
+    </div>
+    <!-- /page -->
+    
+    
+  
+
+  </body>
+</html>

@@ -22,6 +22,7 @@
     <script src="src/taxonomy_term.js"></script>
     <script src="src/taxonomy_vocabulary.js"></script>
     <script src="src/user.js"></script>
+    <script src="bin/jdrupal.js"></script>
     
   </head>
 
@@ -34,30 +35,23 @@
     <script type="text/javascript">
     
       // Set the site path (without the trailing slash).
-      Drupal.settings.site_path = "http://www.m.reisandirvys.com"; // http://www.example.com
+      Drupal.settings.site_path = "http://m.reisandirvys.com"; // http://www.example.com
       
       // Set the Service Resource endpoint path.
       Drupal.settings.endpoint = "rest";
     
       function hello_world() {
-       // Perform a System Connect call.
+        
         system_connect({
             success:function(result){
-              
-              // Place custom code here...
-              
-              if (Drupal.user.uid == 0) { message = "Hello World, Visitor!"; }
-              else { message = "Hello World, " + Drupal.user.name + "!"; }
-              document.getElementById("message").innerHTML = message;
-              
-            },
-            error:function(xhr, status, message) {
-              alert(message);
+              if (Drupal.user.uid != 0) {
+                
+              }
             }
         });
         
       }
-	  
+    
     </script>
     
   </body>
