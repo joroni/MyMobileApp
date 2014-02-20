@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
 
   <head>
@@ -25,6 +25,7 @@
     <!-- include to test binary -->
      <!--   <script src="bin/jdrupal.js"></script>-->
     <script src="bin/jdrupal-7.x-1.0-rc2.js"></script>
+    <script type="text/javascript" src="js/SocialSharing.js"></script>
  <!--    <script src="bin/jdrupal.min.js"></script> -->
   <script src="src/base.js"></script>  
     <!-- includes to test source code -->
@@ -120,13 +121,32 @@ shareViaFacebook('Message via Facebook',
                  console.log('share ok'), // success callback
                  function(errormsg){alert(errormsg)}) // error callback
  
-s/*hareVia('com.apple.social.sinaweibo' // for options, see the repo
+/*shareVia('com.apple.social.sinaweibo' // for options, see the repo
          'Message via Weibo on iOS',
          null,
          null,
          console.log('share ok'), */// success callback
         /* function(errormsg){alert(errormsg)})*/ // error callback
 	 
+	</script>
+    <script>
+	var data = {
+  // currently required
+  "name": "Love Froyo Share",
+  "iconURL": baseurl+"/firefox16.png",
+  "icon32URL": baseurl+"/firefox32.png",
+  "icon64URL": baseurl+"/firefox64.png",
+
+  "shareURL": baseurl+"/share.html?url=%{url}",
+
+  // should be available for display purposes
+  "description": "Fat-free Fresh Frozen Yogurt designed by you. Served in 30 seconds in an 8 oz. paper cup. Choose from 2 fro-yo flavors (+ the twist) and 6 toppings. Perfect for high schools, corporate offices, colleges, hospitals. Takes only 24 square feet!",
+  "author": "Reis and Irvy's, Love Froyo",
+  "homepageURL": "http://reisandirvys.com/",
+
+  // optional
+  "version": "1.0"
+}
 	</script>
   </head>
 
@@ -416,7 +436,7 @@ s/*hareVia('com.apple.social.sinaweibo' // for options, see the repo
       <a href="#wform" onClick="listSocial();" id="btn-social"  data-role="button" data-icon="tag" class="ui-btn ui-btn-inline ui-shadow ui-icon-tag ui-btn-icon-left ui-corner-all">Social</a>
      </li>
        <li class="menu-leaf">
-       <a href="#wform" onClick="listShout();"  id="btn-shout" data-role="button" data-icon="comment" class="ui-btn ui-btn-inline ui-shadow ui-icon-comment ui-btn-icon-left ui-corner-all">Shout Out</a>
+       <a href="#wform" onClick="listShout();"  id="btn-shout" data-role="button" data-icon="audio" class="ui-btn ui-btn-inline ui-shadow ui-icon-comment ui-btn-icon-left ui-corner-all">Shout Out</a>
       </li>
       <!--<a href="#" onClick="listWhat();"  data-role="button" data-icon="star"  class="ui-btn ui-btn-inline ui-icon-star ui-btn-icon-left ui-corner-all">What's New</a>
      
@@ -458,8 +478,9 @@ s/*hareVia('com.apple.social.sinaweibo' // for options, see the repo
   
       <!-- /content -->
       <div id="navigation">
-      <button id="social_share" onclick="window.plugins.socialsharing.share('My message')">share!</button>
-      <a href="#popupVideo" data-rel="popup" data-position-to="window" class="ui-btn ui-corner-all ui-mini ui-shadow ui-btn-inline">Comments</a>
+      <!--<button id="social_share" onclick="window.plugins.socialsharing.share('My message')">share!</button>-->
+      <a href="#" id="social_share" data-rel="popup" data-icon="heart" onclick="window.plugins.socialsharing.share('My message')" data-position="right" data-position-to="window" class="ui-btn ui-corner-all ui-mini ui-shadow ui-btn-inline ui-btn ui-icon-heart ui-btn-icon ui-btn-icon-notext">Share</a>
+      <a href="#popupVideo" data-rel="popup" data-icon="comment" data-position-to="window" class="ui-btn ui-corner-all ui-icon-comment ui-mini ui-shadow ui-btn-inline ui-btn-icon ui-btn-icon-notext">Comments</a>
 <div data-role="popup" id="popupVideo" data-overlay-theme="b" data-theme="a" data-tolerance="15,15" class="ui-content">
     <iframe src="http://m.reisandirvys.com/comment/reply/3/11" seamless height="250" width="290"></iframe>
 </div><!-- /navigation -->
@@ -538,7 +559,7 @@ s/*hareVia('com.apple.social.sinaweibo' // for options, see the repo
       <a href="#wform" onClick="listSocial();" id="btn-social"  data-role="button" data-icon="tag" class="ui-btn ui-btn-inline ui-shadow ui-icon-tag ui-btn-icon-left ui-corner-all">Social</a>
      </li>
        <li class="menu-leaf">
-       <a href="#wform" onClick="listShout();"  id="btn-shout" data-role="button" data-icon="comment" class="ui-btn ui-btn-inline ui-shadow ui-icon-comment ui-btn-icon-left ui-corner-all">Shout Out</a>
+       <a href="#wform" onClick="listShout();"  id="btn-shout" data-role="button" data-icon="audio" class="ui-btn ui-btn-inline ui-shadow ui-icon-comment ui-btn-icon-left ui-corner-all">Shout Out</a>
       </li>
       <!--<a href="#" onClick="listWhat();"  data-role="button" data-icon="star"  class="ui-btn ui-btn-inline ui-icon-star ui-btn-icon-left ui-corner-all">What's New</a>
      
