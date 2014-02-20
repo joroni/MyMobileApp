@@ -122,7 +122,7 @@
 					 // alert('Loaded node: ' + node.title);
 					 // $("#title").html(node.title);
 					 // $("#banner").html("<img src='" + node.path+"'/>");
-					 $("#title").html("<img src='" + node.title+"'/>");
+					 $("#title").html("<img src='"+Drupal.settings.site_path + node.title+"'/>");
 						$("#comment_link").html("<a href='" + node.path+"'>Comment</a>");
 					// $("#banner").html(node.field_social_image);
 					  
@@ -146,7 +146,7 @@
 					 // alert('Loaded node: ' + node.title);
 					 /* $("#title").html('Shout Out!');*/
 					  
-						$("#title").html("<img src='" + node.title+"'/>");
+						$("#title").html("<img src='"+Drupal.settings.site_path + node.title+"'/>");
 						$("#comment_link").html("<a href='" + node.path+"'>Comment</a>");
 					},
 					error: function(xhr, status, message) {
