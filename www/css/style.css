@@ -9,6 +9,13 @@
 	border:none;
 }
 
+div#navigation {
+	 bottom: 2.9em;
+    padding: 0 10px;
+    position: fixed;
+    width: 100%;
+}
+
 ul#btn-list-header li.ui-btn-inner, ul#btn-list-footer li.ui-btn-inner {
     display: block;
     float: left !important;
@@ -18,6 +25,60 @@ ul#btn-list-header li.ui-btn-inner, ul#btn-list-footer li.ui-btn-inner {
     text-overflow: ellipsis;
     white-space: nowrap;;
 }
+
+/*a#mainmenu.ui-btn {
+	height:30px;
+}*/
+
+div#main-menu-holder {
+	position:relative;
+	left:-55px;
+	
+}
+
+ul#main-menu, ul, menu, dir  {
+	padding:none;
+}
+
+ul#main-menu li.menu-leaf {
+border-left: 1px solid #333;
+border-right: 1px solid #961351;
+border-top: 1px solid #d27ea6;
+border-bottom: 1px solid #d27ea6;
+
+    float: left;
+    list-style: none outside none;
+    margin-top: -22px;
+	width:105px;
+	height:50px;
+
+	
+background: #be417f; /* Old browsers */
+background: -moz-linear-gradient(top,  #be417f 0%, #a10d6d 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#be417f), color-stop(100%,#a10d6d)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #be417f 0%,#a10d6d 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #be417f 0%,#a10d6d 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #be417f 0%,#a10d6d 100%); /* IE10+ */
+background: linear-gradient(to bottom,  #be417f 0%,#a10d6d 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#be417f', endColorstr='#a10d6d',GradientType=0 ); /* IE6-9 */
+
+
+}
+
+ul#main-menu li.menu-leaf a {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
+    border: 0px solid;
+    border-radius: 0;
+    box-shadow: none !important;
+    color: #380923;
+    font-family: Arial,Helvetica,sans-serif;
+    height: 30px;
+    padding: 15px 5px 5px 15px;
+    text-shadow: 1px 1px 0 #929080;
+    top: -7px;
+    width: 85px;
+}
+
 div#nav-panel.ui-panel div.ui-panel-inner ul.ui-listview li a {
 	font-weight:100;
 }
@@ -50,11 +111,12 @@ div#panel-fixed-page1, .ui-overlay-a, .ui-page-theme-a, .ui-page-theme-a, .ui-he
 
 #footer, .ui-footer {
     background: url("../img/header-tile.png") repeat-x scroll 0 -20px #ED088E !important;
-    border-bottom: 0 solid #F562A4 !important;
+    border-top: 1px solid #F562A4 !important;
     bottom: 0 !important;
     display: block;
     min-height: 2.6875em;
-    padding-left: 5px;
+	height:22px;
+    padding:0px 5px;
     position: fixed !important;
     text-shadow: 0 1px 1px #333333;
     width: 100%;
@@ -63,8 +125,11 @@ div#panel-fixed-page1, .ui-overlay-a, .ui-page-theme-a, .ui-page-theme-a, .ui-he
 
 
 div#banner img, div#title img {
+	margin-top:70px;
 	width:100%;
 }
+
+
 /************ Preloadme **********************/
 
 body {
@@ -79,7 +144,8 @@ body {
 		right:0;
 		bottom:0;
 		/*background-color:#fff;  change if the mask should have another color then white */
-		background-color:rgba(255,255,255,0.9) !important;
+		/*background-color:rgba(255,255,255,0.9) !important;*/
+		background-color:none;
 		/*background:none repeat scroll 0 center rgba(0, 0, 0, 0);*/
 		z-index:99; /* makes sure it stays on top */
 	}
@@ -92,7 +158,10 @@ body {
 		left:50%; /* centers the loading animation horizontally one the screen */
 		top:50%; /* centers the loading animation vertically one the screen */
 		background-image:url(../img/status.gif); /* path to your loading animation */
-		background-repeat:no-repeat;
+		background-color:rgba(255,255,255,0.9) !important;
+		border-radius: 10px;
+		box-shadow:1px 2px 4px #333;
+		background-repeat:no-repeat !important;
 		background-position:center;
 		margin:-100px 0 0 -100px; /* is width and height divided by two */
 	}

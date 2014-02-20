@@ -29,6 +29,7 @@
   <script src="src/base.js"></script>  
     <!-- includes to test source code -->
     <script src="src/includes/module.inc.js"></script>
+    <script src="src/includes/froyo_menu.inc.js"></script>
     <script src="src/comment.js"></script>
     <script src="src/drupal.js"></script>
     <script src="src/entity.js"></script>
@@ -111,51 +112,7 @@
 
 	  
 	  <script>
-	   /********************** SOCIAL PAGE **************************/
-
-
-	   
-		function listSocial() {
-				
-				node_load(3, {
-					success: function(node) {
-					 // alert('Loaded node: ' + node.title);
-					 // $("#title").html(node.title);
-					 // $("#banner").html("<img src='" + node.path+"'/>");
-					 $("#title").html("<img src='"+Drupal.settings.site_path + node.title+"'/>");
-						$("#comment_link").html("<a href='" + node.path+"'>Comment</a>");
-					// $("#banner").html(node.field_social_image);
-					  
-					 //  $image_field_values = field_get_items('node', $new_node, 'field_image');
-					   // $("#latestlist").html(node.field_get_items('node', 'field_image'));
-					 // $("#image").html("Loaded node: " + field_shout_image.filename);
-					},
-					error: function(xhr, status, message) {
-					  alert(message)
-					}
-				});
-			}
-		/********************** END SOCIAL PAGE **************************/
-		
-		/********************** SHOUT PAGE **************************/
-
-			function listShout() {
-				
-				node_load(5, {
-					success: function(node) {
-					 // alert('Loaded node: ' + node.title);
-					 /* $("#title").html('Shout Out!');*/
-					  
-						$("#title").html("<img src='"+Drupal.settings.site_path + node.title+"'/>");
-						$("#comment_link").html("<a href='" + node.path+"'>Comment</a>");
-					},
-					error: function(xhr, status, message) {
-					  alert(message)
-					}
-				});
-			}
-
-      /********************** SHOUT PAGE **************************/
+	  
 	 
 	</script>
   </head>
@@ -194,8 +151,8 @@
 		  set_drupal_settings();
 		  
            $('#go').on('click', function(){
-             $('#preloader').show();
-		  	$('#status').show(); 
+             $('#preloader').show('slow');
+		  	$('#status').show('slow'); 
               if (Drupal.settings.site_path == '') {
                 alert('Enter a site path!');
                 return false;
@@ -226,7 +183,7 @@
 					 $('#connect2_wrapper').hide();
                       $('#login_name_wrapper').show('slow');
                     $('#login_pass_wrapper').show('slow');
-					 $('#login').show();
+					 $('#login').show('slow');
 					  $('#logout').hide();
                     if (result.user.uid != 0) {
 					
@@ -236,12 +193,12 @@
 					$('#footer').show('slow');
 					$('#navmenu').show('slow');
 					 $('#login').hide();
-                      $('#logout').show();
+                      $('#logout').show('slow');
                       $('#go').hide();
 					   $('#run_nodes').hide();
                       //if (Drupal.user.uid == 0) {
 					if (result.user.uid == 0) {
-					$('#login').show();
+					$('#login').show('slow');
 					$('#logout').hide();
                        
                       }
@@ -269,14 +226,14 @@
 		   
           $('#login').on('click', function(){
               set_drupal_settings();
-			    $('#preloader').show();
-					  $('#status').show();
+			    $('#preloader').show('slow');
+					  $('#status').show('slow');
               user_login($('#login_name').val(), $('#login_pass').val(), {
                   success:function(result){
 					 
                     alert('Hi, ' + result.user.name + '!');
                     $('#login').hide();
-					 $('#navmenu').show();
+					 $('#navmenu').show('slow');
 					    $('#preloader').fadeOut();
 					  $('#status').fadeOut();
 					  $('#login_name_wrapper').hide();
@@ -293,8 +250,8 @@
           });
           
           $('#logout').on('click', function(){
-			    $('#preloader').show();
-					  $('#status').show();
+			    $('#preloader').show('slow');
+					  $('#status').show('slow');
               user_logout({
                   success:function(result){
 					    $('#preloader').fadeOut();
@@ -356,54 +313,7 @@
               return false;
           });
 		  
-			/*	function taxonomy_term_load() {
-			  try {
-				// Grab some recent content and display it.
-				 entity_load(
-				  'rest/social', {
-					success: function(content) {
-					  // Extract the nodes into items, then drop them in the list.
-					  var items = [];
-					  $.each(content.nodes, function(index, object) {
-						  items.push(l(object.node.title, 'node/' + object.node.nid));
-					  });
-					  drupalgap_item_list_populate('#message', items);
-					}
-				  }
-				);
-			  }
-			  catch (error) { console.log('node_page_pageshow - ' + error); }
-			}
-*/
-
-
-
-
-		  function listShout(){
-			  
-				/*		  node_load(5, {
-					success: function(node) {
-					 // alert('Loaded node: ' + node.title);
-					  $("#messages").html("Loaded node: " + node.title);
-					  $("#image").html("Loaded node: " + field_shout_image.filename);
-					},
-					error: function(xhr, status, message) {
-					  alert(message)
-					}
-				});*/
-				
-				taxonomy_vocabulary_load(2, {
-						success:function(taxonomy_vocabulary) {
-						$("#messages").html("Loaded node: " + taxonomy_vocabulary.name);
-					   $("#image").html("Loaded node: " + taxonomy_vocabulary.filename);
-					
-						  console.log('Loaded vocabulary: ' + taxonomy_vocabulary.name);
-						}
-					});
-				
-					  
-
-		  }
+			
 		   
 		   
       });
@@ -419,11 +329,11 @@
       <div id="navigation"></div>
         <div id="sitelogo" style="margin:50px auto; text-align:center; visibility:visible;"><img src="logo.png" style="width:200px" /></div>
       <div data-role="content" class='content' style="visibility:visible; margin:0 auto; width:300px">
-        <div data-role="fieldcontain" id="connect_wrapper">
+        <div data-role="fieldcontain" id="connect_wrapper" style="visibility:hidden;">
        <!--   <label for="site_path">Server</label>-->
           <input type="text" id="site_path" value=""  placeholder="Server URL"/>
         </div>
-        <div data-role="fieldcontain" id="connect2_wrapper" style="visibility:visble;">
+        <div data-role="fieldcontain" id="connect2_wrapper" style="visibility:hidden;">
           <!--<label for="endpoint">Service Name</label>-->
           <input type="text" id="endpoint" value="" placeholder="Service Name" />
         </div>
@@ -436,7 +346,7 @@
           <input type="password" id="login_pass" placeholder="Password" />
         </div>
         <fieldset>
-         <div style="margin:0 auto; width:300px"><button type="submit" id="go" style="visibility:visible; ">Hop in</button></div>
+         <div style="margin:0 auto; width:300px; position:fixed; bottom:10px;"><button type="submit" id="go" style="visibility:visible; ">Hop in</button></div>
           <div><button type="submit" id="login" style="display: none;">Login</button></div>
           <!--<div><button type="submit" id="logout" style="display: none;">Logout</button></div>-->
           <div><button type="submit" id="run_tests" style="display: none;">Run Tests</button></div>
@@ -487,16 +397,19 @@
 		</ul>-->
        <!-- <a href="#nav-panel" class="ui-btn ui-btn-inline ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all">Nav-Panel</a>-->
      
-    
-      <a href="#wform" onClick="listSocial();"  data-role="button" data-icon="tag" class="ui-btn ui-btn-inline ui-icon-tag ui-btn-icon-left ui-corner-all">Social</a>
-    <!--  <a href="#social"  data-role="button" data-icon="tag" class="ui-btn ui-btn-inline ui-icon-tag ui-btn-icon-left ui-corner-all">Social</a>-->
+        <div id="main-menu-holder" >
+     <ul id="main-menu">
+    <li class="menu-leaf">
+      <a href="#wform" onClick="listSocial();" id="btn-social"  data-role="button" data-icon="tag" class="ui-btn ui-btn-inline ui-shadow ui-icon-tag ui-btn-icon-left ui-corner-all">Social</a>
+     </li>
+       <li class="menu-leaf">
+       <a href="#wform" onClick="listShout();"  id="btn-shout" data-role="button" data-icon="comment" class="ui-btn ui-btn-inline ui-shadow ui-icon-comment ui-btn-icon-left ui-corner-all">Shout Out</a>
+      </li>
+      <!--<a href="#" onClick="listWhat();"  data-role="button" data-icon="star"  class="ui-btn ui-btn-inline ui-icon-star ui-btn-icon-left ui-corner-all">What's New</a>
      
-       <a href="#wform" onClick="listShout();"  data-role="button" data-icon="comment" class="ui-btn ui-btn-inline ui-icon-comment ui-btn-icon-left ui-corner-all">Shout Out</a>
-     
-     <!-- <a href="#" onClick="listWhat();"  data-role="button" data-icon="star"  class="ui-btn ui-btn-inline ui-icon-star ui-btn-icon-left ui-corner-all">What's New</a>
-     
-     <a href="#" onClick="listVote();"  data-role="button" data-icon="check" class="ui-btn ui-btn-inline ui-icon-check ui-btn-icon-left ui-corner-all">Vote</a>
-      -->
+     <a href="#" onClick="listVote();"  data-role="button" data-icon="check" class="ui-btn ui-btn-inline ui-icon-check ui-btn-icon-left ui-corner-all">Vote</a>-->
+      </ul>
+      </div>
       </div><!-- /footer -->
        <div data-role="panel" data-position-fixed="true" data-display="push" data-theme="b" id="nav-panel">
         <ul data-role="listview">
@@ -531,12 +444,12 @@
       </div>
   
       <!-- /content -->
-      <div id="navigation" style="position:fixed; bottom:6.9em; width:100%;">
+      <div id="navigation">
       
-      <a href="#popupVideo" data-rel="popup" data-position-to="window" class="ui-btn ui-corner-all ui-shadow ui-btn-inline">Comments</a>
+      <a href="#popupVideo" data-rel="popup" data-position-to="window" class="ui-btn ui-corner-all ui-mini ui-shadow ui-btn-inline">Comments</a>
 <div data-role="popup" id="popupVideo" data-overlay-theme="b" data-theme="a" data-tolerance="15,15" class="ui-content">
     <iframe src="http://m.reisandirvys.com/comment/reply/3/11" seamless height="250" width="290"></iframe>
-</div>
+</div><!-- /navigation -->
 
 
     
@@ -606,16 +519,19 @@
 			</li>
 		</ul>-->
        <!-- <a href="#nav-panel" class="ui-btn ui-btn-inline ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all">Nav-Panel</a>-->
-     
-    
-      <a href="#wform" onClick="listSocial();"  data-role="button" data-icon="tag" class="ui-btn ui-btn-inline ui-icon-tag ui-btn-icon-left ui-corner-all">Social</a>
-     
-       <a href="#wform" onClick="listShout();"  data-role="button" data-icon="comment" class="ui-btn ui-btn-inline ui-icon-comment ui-btn-icon-left ui-corner-all">Shout Out</a>
-     
+    <div id="main-menu-holder" >
+     <ul id="main-menu">
+    <li class="menu-leaf">
+      <a href="#wform" onClick="listSocial();" id="btn-social"  data-role="button" data-icon="tag" class="ui-btn ui-btn-inline ui-shadow ui-icon-tag ui-btn-icon-left ui-corner-all">Social</a>
+     </li>
+       <li class="menu-leaf">
+       <a href="#wform" onClick="listShout();"  id="btn-shout" data-role="button" data-icon="comment" class="ui-btn ui-btn-inline ui-shadow ui-icon-comment ui-btn-icon-left ui-corner-all">Shout Out</a>
+      </li>
       <!--<a href="#" onClick="listWhat();"  data-role="button" data-icon="star"  class="ui-btn ui-btn-inline ui-icon-star ui-btn-icon-left ui-corner-all">What's New</a>
      
      <a href="#" onClick="listVote();"  data-role="button" data-icon="check" class="ui-btn ui-btn-inline ui-icon-check ui-btn-icon-left ui-corner-all">Vote</a>-->
-      
+      </ul>
+      </div>
       </div><!-- /footer -->
       
       
