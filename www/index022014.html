@@ -107,25 +107,74 @@
 	}
       </script>
     
-   
+     <script>
 
-	  
-	  <script>
-	   /********************** SOCIAL PAGE **************************/
-
-
-	   
-		function listSocial() {
+	  /********************** SOCIAL PAGE **************************/
+	  /* $('#social').on('click', function(){
+		  //$('#social').live('pageshow',function(){
+				  try {
+					$.ajax({
+					  url: "http://m.reisandirvys.com/social",
+					  type: 'get',
+					  dataType: 'json',
+					  error: function (XMLHttpRequest, textStatus, errorThrown) {
+						alert('page_node_pages - failed to retrieve pages');
+						console.log(JSON.stringify(XMLHttpRequest));
+						console.log(JSON.stringify(textStatus));
+						console.log(JSON.stringify(errorThrown));
+					  },
+					  success: function (data) {
+						$("#latestlist").html("");
+						$.each(data.nodes,function (node_index,node_value) {
+						  console.log(JSON.stringify(node_value));
+						  $("#latestlist").append($("<li></li>",{"html":"<a href='#page_node_view' id='" + node_value.node.nid + "' class='page_node_pages_list_title'>" + node_value.node.title + "</a>"}));
+						});
+						$("#latestlist").listview("destroy").listview();
+					  }
+					});
+				  }
+				  catch (error) { alert("page_node_pages - " + error); }
+				});
 				
+				$('a.page_node_pages_list_title').on("click",function(){
+				  nid = $(this).attr('id'); // set the global nid to the node that was just clicked
+				});*/
+	 // var baseurl = Drupal.settings.site_path;
+	
+		function listSocial() {
+				 /*Drupal.settings.site_path = window.location.href.replace('/javascript-application/','').replace('index.html', '');
+				$.ajax({*/
+			/*node_load(5, {
+			
+				url: '/rest/shout',
+				type: 'get',
+				data: {
+					view_name: 'Shout-outs',
+					view_display_id: '5',
+					per_page: 1,
+					page: 1
+				},
+				dataType: 'json',
+				success: function (response) {
+					if (response[1] !== undefined) {
+						
+						var viewHtml = response[1].data;
+						$('#latestlist').append(viewHtml);
+						//$('#latestlist').append(node.title);
+						Drupal.attachBehaviors();
+					}
+					
+				}
+			});*/
+			 /* $("#latestlist").append($("<li></li>",{"html":"<a href='#page_node_view' id='" + node_value.node.nid + "' class='page_node_pages_list_title'>" + node_value.node.title + "</a>"}));*/
+						
+		
 				node_load(3, {
 					success: function(node) {
 					 // alert('Loaded node: ' + node.title);
-					 // $("#title").html(node.title);
-					 // $("#banner").html("<img src='" + node.path+"'/>");
-					 $("#title").html("<img src='" + node.title+"'/>");
-						$("#comment_link").html("<a href='" + node.path+"'>Comment</a>");
-					// $("#banner").html(node.field_social_image);
-					  
+					  $("#title").html(node.title);
+					  $("#banner").html("<img src='" +node.path+"'/>");
+					   
 					 //  $image_field_values = field_get_items('node', $new_node, 'field_image');
 					   // $("#latestlist").html(node.field_get_items('node', 'field_image'));
 					 // $("#image").html("Loaded node: " + field_shout_image.filename);
@@ -134,29 +183,84 @@
 					  alert(message)
 					}
 				});
-			}
-		/********************** END SOCIAL PAGE **************************/
-		
-		/********************** SHOUT PAGE **************************/
-
-			function listShout() {
 				
-				node_load(5, {
-					success: function(node) {
-					 // alert('Loaded node: ' + node.title);
-					 /* $("#title").html('Shout Out!');*/
+				
+		/*	node_load(3, {
+				success:function(node) {
+					 if (node.length == 0) { return; }
+					  var data = node[0];
 					  
-						$("#title").html("<img src='" + node.title+"'/>");
-						$("#comment_link").html("<a href='" + node.path+"'>Comment</a>");
-					},
-					error: function(xhr, status, message) {
-					  alert(message)
-					}
-				});
-			}
-
-      /********************** SHOUT PAGE **************************/
-	 
+					$("#latestlist").html(data);
+				  console.log('Loaded node: ' + node.title);
+				
+				//'path': baseurl + '/rest/social',
+				//path: "http://m.reisandirvys.com/rest/",
+			
+				  
+				
+			
+				}
+			});*/
+			/*function views_datasource_get_view_result(path, options)  {
+			 try {
+					$.ajax({
+					  path: "http://m.reisandirvys.com/rest/social",
+					  type: 'get',
+					  dataType: 'json',
+					  error: function (XMLHttpRequest, textStatus, errorThrown) {
+						alert('page_node_pages - failed to retrieve pages');
+						console.log(JSON.stringify(XMLHttpRequest));
+						console.log(JSON.stringify(textStatus));
+						console.log(JSON.stringify(errorThrown));
+					  },
+					  success: function (data) {
+						$("#latestlist").html("");
+						$.each(data.nodes,function (node_index,node_value) {
+						  console.log(JSON.stringify(node_value));
+						  $("#latestlist").append($("<li></li>",{"html":"<a href='#page_node_view' id='" + node_value.node.nid + "' class='page_node_pages_list_title'>" + node_value.node.title + "</a>"}));
+						});
+						$("#latestlist").html(data);
+						//$("#latestlist").listview("destroy").listview();
+					  }
+					});
+				  }
+				  catch (error) { alert("page_node_pages - " + error); }
+				//});
+		}*/
+			
+			/*var query = {
+			  fields:['1'],
+			  parameters:{
+				'name':'social',
+				'path': baseurl + '/rest/social'
+			  }
+			};
+			taxonomy_term_load(1, {
+				success:function(terms){
+				  if (terms.length == 0) { return; }
+				  var term = terms[0];
+				  $("#field_social_image").html(data);
+				  alert('Loaded vocabulary #' + term.tid);
+				}
+			});*/
+			/*url = baseurl + '/rest/social';
+			user_load($('#login_name').val(), $('#login_pass').val());
+			$username = '';
+			$("#field_social_image").html("Retrieving...");
+			$.post(url, {
+				//name : $username ,
+				//view : localStorage.view,
+				//display : localStorage.display
+			}, function(data) {
+				if (data == '') {
+					data = "you must <br/><br/>enable the view in drupal <br/><br/>set the mobile settings page (below)<br/><br/>enable the default views frontage is good starting point "
+				};
+				$("#field_social_image").html(data);
+		
+			});
+			$.mobile.changePage("#social");*/
+		}
+		/********************** END SOCIAL PAGE **************************/
 	</script>
   </head>
 
@@ -379,7 +483,7 @@
 
 
 
-		  function listShout(){
+		  function services_term(){
 			  
 				/*		  node_load(5, {
 					success: function(node) {
@@ -488,10 +592,10 @@
        <!-- <a href="#nav-panel" class="ui-btn ui-btn-inline ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all">Nav-Panel</a>-->
      
     
-      <a href="#wform" onClick="listSocial();"  data-role="button" data-icon="tag" class="ui-btn ui-btn-inline ui-icon-tag ui-btn-icon-left ui-corner-all">Social</a>
+      <a href="#social" onClick="listSocial();"  data-role="button" data-icon="tag" class="ui-btn ui-btn-inline ui-icon-tag ui-btn-icon-left ui-corner-all">Social</a>
     <!--  <a href="#social"  data-role="button" data-icon="tag" class="ui-btn ui-btn-inline ui-icon-tag ui-btn-icon-left ui-corner-all">Social</a>-->
      
-       <a href="#wform" onClick="listShout();"  data-role="button" data-icon="comment" class="ui-btn ui-btn-inline ui-icon-comment ui-btn-icon-left ui-corner-all">Shout Out</a>
+       <a href="#" onClick="listShout();"  data-role="button" data-icon="comment" class="ui-btn ui-btn-inline ui-icon-comment ui-btn-icon-left ui-corner-all">Shout Out</a>
      
       <a href="#" onClick="listWhat();"  data-role="button" data-icon="star"  class="ui-btn ui-btn-inline ui-icon-star ui-btn-icon-left ui-corner-all">What's New</a>
      
@@ -514,15 +618,15 @@
     </div><!-- /page -->
     
      <!-- Start of social page -->
-    <div data-role="page" id="wform">
+    <div data-role="page" id="social">
       <div data-role="header" data-id="bhead" data-theme="e">
-       <!-- <h1 id="title">Page Title</h1>-->
+        <h1 id="title">Social</h1>
         <a href="#" data-icon="back" data-rel="back" class="ui-btn ui-btn-inline ui-btn ui-icon-back ui-btn-icon-notext ui-corner-all">Back</a>
        <!-- <a href="#info" data-icon="info" class="ui-btn-right">Info</a>-->
       </div>
       <!-- /header -->
- 
-         <div id="title" style="margin:0 auto; text-align:center; visibility:visible;">
+ <div id="field_social_image;"></div>
+         <div id="banner" style="margin:0 auto; text-align:center; visibility:visible;">
      <!--   <img src="http://www.m.reisandirvys.com/sites/default/files/styles/mobile_320x320/public/Social.png?itok=ulF572C0" style="width:100%"/>-->
         </div>
       
@@ -532,30 +636,61 @@
   
       <!-- /content -->
       <div id="navigation" style="position:fixed; bottom:6.9em; width:100%;">
-      
-      <a href="#popupVideo" data-rel="popup" data-position-to="window" class="ui-btn ui-corner-all ui-shadow ui-btn-inline">Comments</a>
-<div data-role="popup" id="popupVideo" data-overlay-theme="b" data-theme="a" data-tolerance="15,15" class="ui-content">
-    <iframe src="http://m.reisandirvys.com/comment/reply/3/11" seamless height="250" width="290"></iframe>
-</div>
-
-
-    
-<!--<a href="#popupLogin" data-rel="popup" data-position-to="window" class="ui-btn ui-btn-right ui-btn-inline ui-icon-plus ui-btn-icon-left ui-corner-all" data-transition="pop" style="width:150px;">Comment</a>
-    <div id="comment_link"></div> 
+      <a href="#popupNested" data-rel="popup" data-transition="pop" class="ui-btn ui-btn-left ui-btn-inline ui-icon-comment ui-btn-icon-left ui-corner-all" style="width:150px;">See Comments</a>
+      <div data-role="popup" id="popupNested" data-theme="none">
+    <div data-role="collapsibleset" data-theme="b" data-content-theme="a" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" style="margin:0; width:250px;">
+        <div data-role="collapsible" data-inset="false">
+        <h2>This is great!</h2>
+            <ul data-role="listview">
+                <li><a href="#" data-rel="dialog">I aGree</a></li>
+                <li><a href="#" data-rel="dialog">Perfect</a></li>
+                <li><a href="#" data-rel="dialog">It's so cool</a></li>
+                <li><a href="#" data-rel="dialog">Thumbs up</a></li>
+            </ul>
+        </div><!-- /collapsible -->
+        <div data-role="collapsible" data-inset="false">
+        <h2>Cool</h2>
+            <ul data-role="listview">
+                <li><a href="#" data-rel="dialog">Awesome</a></li>
+                <li><a href="#" data-rel="dialog">This is what I'm looking for</a></li>
+                <li><a href="#" data-rel="dialog">Iguana</a></li>
+                <li><a href="#" data-rel="dialog">Mouse</a></li>
+            </ul>
+        </div><!-- /collapsible -->
+        <div data-role="collapsible" data-inset="false">
+        <h2>Great</h2>
+            <ul data-role="listview">
+                <li><a href="#" data-rel="dialog">Fish</a></li>
+                <li><a href="#" data-rel="dialog">Octopus</a></li>
+                <li><a href="#" data-rel="dialog">Shark</a></li>
+                <li><a href="#" data-rel="dialog">Starfish</a></li>
+            </ul>
+        </div><!-- /collapsible -->
+        <div data-role="collapsible" data-inset="false">
+        <h2>Kudos</h2>
+            <ul data-role="listview">
+                <li><a href="#" data-rel="dialog">....</a></li>
+                <li><a href="#" data-rel="dialog">YEs</a></li>
+                <li><a href="#" data-rel="dialog">Can I have another one?</a></li>
+                <li><a href="#" data-rel="dialog">Zebra</a></li>
+            </ul>
+        </div><!-- /collapsible -->
+    </div><!-- /collapsible set -->
+</div><!-- /popup -->
+<a href="#popupLogin" data-rel="popup" data-position-to="window" class="ui-btn ui-btn-right ui-btn-inline ui-icon-plus ui-btn-icon-left ui-corner-all" data-transition="pop" style="width:150px;">Comment</a>
+     
 <div data-role="popup" id="popupLogin" data-theme="a" class="ui-corner-all">
     <form>
         <div style="padding:10px 20px;">
             <h3>Add Comment</h3>
             <label for="un" class="ui-hidden-accessible">Username:</label>
-            <textarea cols="40" rows="8" name="textarea" id="textarea" data-theme="a"></textarea>-->
+           <textarea cols="40" rows="8" name="textarea" id="textarea" data-theme="a"></textarea>
             <!--<label for="pw" class="ui-hidden-accessible">Password:</label>
             <input name="pass" id="pw" value="" placeholder="password" data-theme="a" type="password">-->
-         <!-- <button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Add</button>
+            <button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Add</button>
         </div>
     </form>
-</div>-->
-
-
+</div>
       </div>
       
       
@@ -608,13 +743,13 @@
        <!-- <a href="#nav-panel" class="ui-btn ui-btn-inline ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all">Nav-Panel</a>-->
      
     
-      <a href="#wform" onClick="listSocial();"  data-role="button" data-icon="tag" class="ui-btn ui-btn-inline ui-icon-tag ui-btn-icon-left ui-corner-all">Social</a>
+      <a href="#social" onClick="listSocial();"  data-role="button" data-icon="tag" class="ui-btn ui-btn-inline ui-icon-tag ui-btn-icon-left ui-corner-all">Social</a>
      
-       <a href="#wform" onClick="listShout();"  data-role="button" data-icon="comment" class="ui-btn ui-btn-inline ui-icon-comment ui-btn-icon-left ui-corner-all">Shout Out</a>
+       <a href="#" onClick="listShout();"  data-role="button" data-icon="comment" class="ui-btn ui-btn-inline ui-icon-comment ui-btn-icon-left ui-corner-all">Shout Out</a>
      
-      <!--<a href="#" onClick="listWhat();"  data-role="button" data-icon="star"  class="ui-btn ui-btn-inline ui-icon-star ui-btn-icon-left ui-corner-all">What's New</a>
+      <a href="#" onClick="listWhat();"  data-role="button" data-icon="star"  class="ui-btn ui-btn-inline ui-icon-star ui-btn-icon-left ui-corner-all">What's New</a>
      
-     <a href="#" onClick="listVote();"  data-role="button" data-icon="check" class="ui-btn ui-btn-inline ui-icon-check ui-btn-icon-left ui-corner-all">Vote</a>-->
+     <a href="#" onClick="listVote();"  data-role="button" data-icon="check" class="ui-btn ui-btn-inline ui-icon-check ui-btn-icon-left ui-corner-all">Vote</a>
       
       </div><!-- /footer -->
       
