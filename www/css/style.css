@@ -10,7 +10,7 @@
 }
 
 div#navigation {
-	 bottom: 2.9em;
+	 bottom: 4em;
     padding: 0 10px;
     position: fixed;
     width: 100%;
@@ -31,10 +31,11 @@ ul#btn-list-header li.ui-btn-inner, ul#btn-list-footer li.ui-btn-inner {
 }*/
 
 div#main-menu-holder {
-	position:relative;
-	left:-55px;
+	position:fixed;
+	left:-40px;
 	
 }
+
 
 ul#main-menu, ul, menu, dir  {
 	padding:none;
@@ -66,22 +67,24 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#be417f', end
 }
 
 ul#main-menu li.menu-leaf a {
-    background: none repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
-    border: 0px solid;
+  background: none repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
+    border: 0 solid;
     border-radius: 0;
     box-shadow: none !important;
     color: #380923;
     font-family: Arial,Helvetica,sans-serif;
-    height: 30px;
+    height: 25px;
     padding: 15px 5px 5px 15px;
     text-shadow: 1px 1px 0 #929080;
-    top: -7px;
+    top: -5px;
     width: 85px;
 }
 
 div#nav-panel.ui-panel div.ui-panel-inner ul.ui-listview li a {
 	font-weight:100;
 }
+
+html.js body.html div#page div#content.clearfix div.region div#block-system-main.block div.content div.comment div.user-picture a img
 
 div#branding {
 	display:none;
@@ -125,7 +128,7 @@ div#panel-fixed-page1, .ui-overlay-a, .ui-page-theme-a, .ui-page-theme-a, .ui-he
 
 
 div#banner img, div#title img {
-	margin-top:70px;
+	margin-top:100px;
 	width:100%;
 }
 
