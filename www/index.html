@@ -1,23 +1,44 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
 
+<head>
+<!--<base href="http://www.m.reisandirvys.com">-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<link rel="shortcut icon" href="./misc/favicon.ico" type="image/vnd.microsoft.icon"/>
+<meta name="Generator" content="Drupal 7 (http://drupal.org)"/>
+<meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no'/>
+
+
   <head>
-    <title>jDrupal</title>
+    <title>Love Froyo</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type='text/css' href="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="shortcut icon" href="logo.png" type="image/png" />
+   <!-- <link rel="stylesheet" type='text/css' href='css/jquery.mobile-1.4.0.min.css' />
+    <link rel="stylesheet" type='text/css' href='css/jqm-demos.css' />
+    <link rel='stylesheet' type='text/css' href='css/qunit-1.12.0.css' />
+    <link rel='stylesheet' type='text/css' href='css/style.css' />
+    <script src="js/jquery-1.9.1.min.js"></script>
+    <script src="js/jquery.mobile-1.4.0.min.js"></script>
+    <script type='text/javascript' src='js/qunit-1.12.0.js'></script>-->
+    
+    <link rel="stylesheet" type='text/css' href='css/jqm-demos.css' />
+     <link rel='stylesheet' type='text/css' href='css/style.css' />
+      <link rel="stylesheet" type='text/css' href="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.css" />
     <link rel='stylesheet' type='text/css' href='http://code.jquery.com/qunit/qunit-1.12.0.css' />
     <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.js"></script>
     <script type='text/javascript' src='http://code.jquery.com/qunit/qunit-1.12.0.js'></script>
-    
+   
     <!-- include to test binary -->
- <!--   <script src="bin/jdrupal.js"></script>-->
+     <!--   <script src="bin/jdrupal.js"></script>-->
     <script src="bin/jdrupal-7.x-1.0-rc2.js"></script>
+    <script type="text/javascript" src="js/SocialSharing.js"></script>
  <!--    <script src="bin/jdrupal.min.js"></script> -->
-    
+  <script src="src/base.js"></script>  
     <!-- includes to test source code -->
     <script src="src/includes/module.inc.js"></script>
+    <script src="src/includes/froyo_menu.inc.js"></script>
     <script src="src/comment.js"></script>
     <script src="src/drupal.js"></script>
     <script src="src/entity.js"></script>
@@ -33,15 +54,74 @@
     <script src="src/taxonomy_term.js"></script>
     <script src="src/taxonomy_vocabulary.js"></script>
     <script src="src/user.js"></script>
+
     
-    <!-- include tests -->
-    <!--<script src="tests/services.comment.test.js"></script>
-    <script src="tests/services.node.test.js"></script>
-    <script src="tests/services.system.test.js"></script>
-    <script src="tests/services.taxonomy_term.test.js"></script>
-    <script src="tests/services.taxonomy_vocabulary.test.js"></script>
-    <script src="tests/services.user.test.js"></script>-->
+<title>Love FroYo</title>
+
+
+
+<style type="text/css" media="all">
+@import url("./modules/system/system.base.css?n0psts");
+</style>
+<style type="text/css" media="all">
+@import url("./modules/field/theme/field.css?n0psts");
+@import url("./sites/all/modules/sociallogin/socialloginandsocialshare.css?n0psts");
+@import url("./sites/all/modules/views/css/views.css?n0psts");
+</style>
+<style type="text/css" media="all">
+@import url("./sites/all/modules/ctools/css/ctools.css?n0psts");
+@import url("./sites/all/modules/webform/css/webform.css?n0psts");
+</style>
+<style type="text/css" media="all">
+@import url("./sites/all/themes/jqmtheme2/styles/mobile_jquery.css?n0psts");
+@import url("./sites/all/themes/jqmtheme2/styles/jqmtheme2.css?n0psts");
+@import url("./sites/all/themes/jqmtheme2/foundation-icons/foundation-icons.css?n0psts");
+@import url("./sites/all/themes/jqmtheme2/styles/poll-rtl.css?n0psts");
+@import url("./sites/all/themes/jqmtheme2/styles/poll.css?n0psts");
+
+	  
+	  <script>
+	  shareViaTwitter('My message');
+ 
+shareViaFacebook('Message via Facebook',
+                 null,
+                 null,
+                 console.log('share ok'), // success callback
+                 function(errormsg){alert(errormsg)}) // error callback
+ 
+/*shareVia('com.apple.social.sinaweibo' // for options, see the repo
+         'Message via Weibo on iOS',
+         null,
+         null,
+         console.log('share ok'), */// success callback
+        /* function(errormsg){alert(errormsg)})*/ // error callback
+	 
+	</script>
     <script>
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 3f7ebac6bb350bf57cd703201246872f05ff22a4
+	var data = {
+  // currently required
+  "name": "Love Froyo Share",
+  "iconURL": baseurl+"/firefox16.png",
+  "icon32URL": baseurl+"/firefox32.png",
+  "icon64URL": baseurl+"/firefox64.png",
+
+  "shareURL": baseurl+"/share.html?url=%{url}",
+
+  // should be available for display purposes
+  "description": "Fat-free Fresh Frozen Yogurt designed by you. Served in 30 seconds in an 8 oz. paper cup. Choose from 2 fro-yo flavors (+ the twist) and 6 toppings. Perfect for high schools, corporate offices, colleges, hospitals. Takes only 24 square feet!",
+  "author": "Reis and Irvy's, Love Froyo",
+  "homepageURL": "http://reisandirvys.com/",
+
+  // optional
+  "version": "1.0"
+}
+	</script>
+<<<<<<< HEAD
+=======
     function connect(){
 		 $().ready(function() {
 		 Drupal.settings.site_path = "http://m.reisandirvys.com"; // http://www.example.com
@@ -55,39 +135,64 @@
     
     
     </script>
+>>>>>>> parent of 68f81e9... menu
+=======
+>>>>>>> 3f7ebac6bb350bf57cd703201246872f05ff22a4
   </head>
 
-  <body onLoad="connect();">
-    
-    <div data-role="page" id="jdrupal">
+
+.page {
+	background:url("./sites/all/themes/jqmtheme2/images/bg-orange.jpg") repeat transparent !important;
+}
+</style>
+<!--  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">-->
+<!-- <link rel="stylesheet" href="sites/all/themes/jqmtheme2/foundation-icons/foundation-icons.css">
+     <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+	 <script type="text/javascript">stLight.options({publisher:'[1bc31927-1da8-4f8a-918e-371ce15268c9]'});</script> 
+   -->
+   
+
+ <link rel="stylesheet" href="css/master.css" type="text/css" media="screen" title="no title" charset="utf-8">
+<<<<<<< HEAD
+    <script type="text/javascript" charset="utf-8" src="js/cordova-incl.js"></script>
+   <!--  <script type="text/javascript" charset="utf-8" src="js/cordova-3.1.0.js"></script>-->
+=======
+   <!-- <script type="text/javascript" charset="utf-8" src="js/cordova-incl.js"></script>-->
+     <script type="text/javascript" charset="utf-8" src="js/cordova-3.1.0.js"></script>
+>>>>>>> 3f7ebac6bb350bf57cd703201246872f05ff22a4
+
+    <div data-url="panel-fixed-page1" data-role="page" class="jqm-demos" id="panel-fixed-page1" data-title="Love Froyo">
       <div data-role="header">
-        <h1>Love Froyo</h1>
+      <a href="#nav-panel" id="navmenu" class="ui-btn ui-btn-inline ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all" style="display:none;">Nav-Panel</a>
+        <!--<h1 id="title">Love Froyo</h1>-->
       </div><!-- header -->
       <div id="navigation"></div>
-      <div data-role="content" class='content'>
-        <div data-role="fieldcontain" id="connect_wrapper">
-          <label for="site_path">Drupal Path</label>
-          <input type="text" id="site_path" value="" />
+        <div id="sitelogo" style="margin:50px auto; text-align:center; visibility:visible;"><img src="logo.png" style="width:200px" /></div>
+      <div data-role="content" class='content' style="visibility:visible; margin:0 auto; width:300px">
+        <div data-role="fieldcontain" id="connect_wrapper" style="visibility:hidden;">
+       <!--   <label for="site_path">Server</label>-->
+          <input type="text" id="site_path" value=""  placeholder="Server URL"/>
         </div>
-        <div data-role="fieldcontain" id="connect2_wrapper">
-          <label for="endpoint">Services Endpoint Path</label>
-          <input type="text" id="endpoint" value="" />
+        <div data-role="fieldcontain" id="connect2_wrapper" style="visibility:hidden;">
+          <!--<label for="endpoint">Service Name</label>-->
+          <input type="text" id="endpoint" value="" placeholder="Service Name" />
         </div>
         <div data-role="fieldcontain" id="login_name_wrapper" style="display: none;">
-          <label for="login_name">Username</label>
-          <input type="text" id="login_name" value="" />
+        <!--  <label for="login_name">Username</label>-->
+          <input type="text" id="login_name" value="" placeholder="Username"/>
         </div>
         <div data-role="fieldcontain" id="login_pass_wrapper" style="display: none;">
-          <label for="login_pass">Password</label>
-          <input type="password" id="login_pass" />
+        <!--  <label for="login_pass">Password</label>-->
+          <input type="password" id="login_pass" placeholder="Password" />
         </div>
         <fieldset>
-          <div><button type="submit" id="go">Connect</button></div>
+         <div style="margin:0 auto; width:300px; position:fixed; bottom:10px;"><button type="submit" id="go" style="visibility:visible; ">Hop in</button></div>
           <div><button type="submit" id="login" style="display: none;">Login</button></div>
-          <div><button type="submit" id="logout" style="display: none;">Logout</button></div>
+          <!--<div><button type="submit" id="logout" style="display: none;">Logout</button></div>-->
           <div><button type="submit" id="run_tests" style="display: none;">Run Tests</button></div>
            <div><button type="submit" id="run_nodes" style="display: none;">Nodes</button></div>
         </fieldset>
+     
       <!--  <div id="messages">Message</div>
         <div id="image">Image</div>-->
         <!--<div id="qunit"></div>
@@ -113,12 +218,20 @@
 			<a href="/vote"><i class="step menu fi-checkbox size-36"></i></a>
 			</li>
 		</ul>-->
-         <ul id="btn-list-footer">
+         <!--<ul id="btn-list-footer">
 			<li class="ui-btn-inner">
 			<a href="#nav-panel">nav</a>
 			</li>
 			<li class="ui-btn-inner">
+<<<<<<< HEAD
+<<<<<<< HEAD
+			<a onClick="listSocial();">Social</a>
+=======
 			<a href="/social">Social</a>
+>>>>>>> parent of 68f81e9... menu
+=======
+			<a onClick="listSocial();">Social</a>
+>>>>>>> 3f7ebac6bb350bf57cd703201246872f05ff22a4
 			</li>
 			<li class="ui-btn-inner">
 			<a href="/shout">ShoutOut</a>
@@ -129,11 +242,229 @@
 			<li class="ui-btn-inner">
 			<a href="/vote">Vote</a>
 			</li>
-		</ul>
-      
+		</ul>-->
+       <!-- <a href="#nav-panel" class="ui-btn ui-btn-inline ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all">Nav-Panel</a>-->
+     
+        <div id="main-menu-holder" >
+     <ul id="main-menu">
+    <li class="menu-leaf">
+      <a href="#wform" onClick="listSocial();" id="btn-social"  data-role="button" data-icon="tag" class="ui-btn ui-btn-inline ui-shadow ui-icon-tag ui-btn-icon-left ui-corner-all">Social</a>
+     </li>
+       <li class="menu-leaf">
+       <a href="#wform" onClick="listShout();"  id="btn-shout" data-role="button" data-icon="audio" class="ui-btn ui-btn-inline ui-shadow ui-icon-comment ui-btn-icon-left ui-corner-all">Shout Out</a>
+      </li>
+      <!--<a href="#" onClick="listWhat();"  data-role="button" data-icon="star"  class="ui-btn ui-btn-inline ui-icon-star ui-btn-icon-left ui-corner-all">What's New</a>
+     
+     <a href="#" onClick="listVote();"  data-role="button" data-icon="check" class="ui-btn ui-btn-inline ui-icon-check ui-btn-icon-left ui-corner-all">Vote</a>-->
+      </ul>
+      </div>
       </div><!-- /footer -->
+       <div data-role="panel" data-position-fixed="true" data-display="push" data-theme="b" id="nav-panel">
+        <ul data-role="listview">
+            <li data-icon="delete"><a href="#" data-rel="close">Close menu</a></li>
+                <li><a href="#wform" onClick="listSocial();" >Social</a></li>
+                <li> <a href="#wform" onClick="listShout();">Shout Out</a></li>
+               <!-- <li><a href="#" onClick="listWhat();">What's New</a></li>
+                <li><a href="#" onClick="listVote();">Vote</a></li>-->
+                 <li><a href="#" id="login" onClick="user_login();" style="display:none;">Sign in</a></li>
+              <li data-icon="power"><a href="#" id="logout" onClick="user_logout();" style="display:none;">Logout</a></li>
+                
+                
+        </ul>
+    </div><!-- /panel -->
     </div><!-- /page -->
     
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 3f7ebac6bb350bf57cd703201246872f05ff22a4
+     <!-- Start of social page -->
+    <div data-role="page" id="wform">
+      <div data-role="header" data-id="bhead" data-theme="e">
+       <!-- <h1 id="title">Page Title</h1>-->
+        <a href="#" data-icon="back" data-rel="back" class="ui-btn ui-btn-inline ui-btn ui-icon-back ui-btn-icon-notext ui-corner-all">Back</a>
+       <!-- <a href="#info" data-icon="info" class="ui-btn-right">Info</a>-->
+      </div>
+      <!-- /header -->
+ 
+         <div id="title" style="margin:0 auto; text-align:center; visibility:visible;">
+     <!--   <img src="http://www.m.reisandirvys.com/sites/default/files/styles/mobile_320x320/public/Social.png?itok=ulF572C0" style="width:100%"/>-->
+        </div>
+      
+      <div id = "latestlist" style="display:block;" data-role="content">
+        
+      </div>
+  
+      <!-- /content -->
+      <div id="navigation">
+      <!--<button id="social_share" onclick="window.plugins.socialsharing.share('My message')">share!</button>-->
+      <a href="#" id="social_share" data-rel="popup" data-icon="heart" onclick="window.plugins.socialsharing.share('My message')" data-position="right" data-position-to="window" class="ui-btn ui-corner-all ui-mini ui-shadow ui-btn-inline ui-btn ui-icon-heart ui-btn-icon ui-btn-icon-notext">Share</a>
+      <a href="#popupVideo" data-rel="popup" data-icon="comment" data-position-to="window" class="ui-btn ui-corner-all ui-icon-comment ui-mini ui-shadow ui-btn-inline ui-btn-icon ui-btn-icon-notext">Comments</a>
+<div data-role="popup" id="popupVideo" data-overlay-theme="b" data-theme="a" data-tolerance="15,15" class="ui-content">
+    <iframe src="http://m.reisandirvys.com/comment/reply/3/11" seamless height="250" width="290"></iframe>
+</div><!-- /navigation -->
+
+
+<script type="text/javascript" charset="utf-8">
+  function showFor(duration) {
+      navigator.splashscreen.show();
+      window.setTimeout(function() {
+          navigator.splashscreen.hide();
+      }, 5000 * duration);
+  }
+</script>
+
+<link rel="stylesheet" href="sites/all/themes/jqmtheme2/foundation-icons/foundation-icons.css">
+<link rel="stylesheet" href="sites/all/themes/jqmtheme2/css/themes/default/jquery.mobile-1.4.0.min.css">
+<link rel="stylesheet" href="sites/all/themes/jqmtheme2/_assets/css/jqm-demos.css">
+<link rel="stylesheet" href="sites/all/themes/jqmtheme2/foundation-icons/foundation-icons.css">
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+window.jQuery || document.write("<script src='/sites/all/modules/jquery_update/replace/jquery/1.8/jquery.min.js'>\x3C/script>")
+//--><!]]>
+</script>
+<script type="text/javascript" src="./misc/jquery.once.js?v=1.2"></script>
+<script type="text/javascript" src="./misc/drupal.js?n0psts"></script>
+<script type="text/javascript" src="./sites/all/modules/webform/js/webform.js?n0psts"></script>
+<script type="text/javascript" src="./sites/all/themes/mobile_jquery/scripts/mobile_jquery.js?n0psts"></script>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+jQuery.extend(Drupal.settings, {"basePath":"\u002F", "pathPrefix":"", "ajaxPageState":{"theme":"jqmtheme2", "theme_token":"6gfpj6taGXPu_lm32RjxrVmL8k3kjJT78J2uvyZy7v8", "css":{"modules\u002Fsystem\u002Fsystem.base.css":1, "modules\u002Ffield\u002Ftheme\u002Ffield.css":1, "sites\u002Fall\u002Fmodules\u002Fsociallogin\u002Fsocialloginandsocialshare.css":1, "sites\u002Fall\u002Fmodules\u002Fviews\u002Fcss\u002Fviews.css":1, "sites\u002Fall\u002Fmodules\u002Fctools\u002Fcss\u002Fctools.css":1, "sites\u002Fall\u002Fmodules\u002Fwebform\u002Fcss\u002Fwebform.css":1, "sites\u002Fall\u002Fthemes\u002Fjqmtheme2\u002Fstyles\u002Fmobile_jquery.css":1, "sites\u002Fall\u002Fthemes\u002Fjqmtheme2\u002Fstyles\u002Fjqmtheme2.css":1, "sites\u002Fall\u002Fthemes\u002Fjqmtheme2\u002Ffoundation-icons\u002Ffoundation-icons.css":1, "sites\u002Fall\u002Fthemes\u002Fjqmtheme2\u002Fstyles\u002Fpoll-rtl.css":1, "sites\u002Fall\u002Fthemes\u002Fjqmtheme2\u002Fstyles\u002Fpoll.css":1}, "js":{"0":1, "1":1, "http:\u002F\u002Fcode.jquery.com\u002Fjquery-1.8.2.min.js":1, "2":1, "misc\u002Fjquery.once.js":1, "misc\u002Fdrupal.js":1, "sites\u002Fall\u002Fmodules\u002Fwebform\u002Fjs\u002Fwebform.js":1, "sites\u002Fall\u002Fthemes\u002Fmobile_jquery\u002Fscripts\u002Fmobile_jquery.js":1}}});
+//--><!]]>
+</script>
+<script src="sites/all/themes/jqmtheme2/js/jquery.js"></script>
+<script src="sites/all/themes/jqmtheme2/_assets/js/index.js"></script>
+<script src="sites/all/themes/jqmtheme2/js/jquery.mobile-1.4.0.min.js"></script>
+
+
+
+
+
+
+       
+</head>
+<body id="stage" class="html front not-logged-in one-sidebar sidebar-first page-what">
+
+        
+<!--<div data-role="page" class="jqm-demos ui-responsive-panel" id="panel-responsive-page1" data-title="Panel responsive page">-->
+<div  data-theme="a" data-role="page" class="page type-home">
+	<!--	<div id="header" 		 data-role="header" data-position="inline" data-theme="a" role="banner"> 	
+		<ul id="btn-list-header">
+			<li class="ui-btn-inner">
+			<a href="#nav-panel"><i class="step menu fi-align-justify size-36"></i></a>
+			</li>
+			<li class="ui-btn-inner">
+			<a href="/social"><i class="step menu fi-share size-36"></i></a>
+			</li>
+			<li class="ui-btn-inner">
+			<a href="/shout"><i class="step menu fi-comment size-36"></i></a>
+			</li>
+			<li class="ui-btn-inner">
+			<a href="/what"><i class="step menu fi-burst-new size-36"></i></a>
+			</li>
+			<li class="ui-btn-inner">
+			<a href="/vote"><i class="step menu fi-checkbox size-36"></i></a>
+			</li>
+
+		</ul>
+	</div>-->
+	<!-- /#header -->
+	<!--<div role="main" class="ui-content jqm-content jqm-fullwidth">-->
+	<div class="main-content" data-theme="a" data-role="content" style="margin-top:7px;">
+		<div class="content-primary">
+			<div class="region region-content">
+				<div id="block-block-3" class="block block-block">
+					 <div class="content">
+    <p style="width:100%; text-align:center;"><img src="./sites/all/themes/jqmtheme2/logo.png" id="site-logo" /></p>
+  </div>
+				</div>
+				<div id="block-user-login" class="block block-user">
+					<!--   <h2>User login</h2>-->
+					<div class="content">
+						<form action="http://www.m.reisandirvys.com/what?destination=what%3Fmag%3D1%26mag_q%3Dwhat" method="post" id="user-login-form" accept-charset="UTF-8">
+                       <!-- <form action="http://www.m.reisandirvys.com" method="post" id="user-login-form" accept-charset="UTF-8">-->
+							<div>
+								<!--<label for="edit-name">Username <span class="form-required" title="This field is required.">*</span></label>-->
+								<input type="text" id="edit-name" name="name" value="" size="15" maxlength="60" class="form-text required" placeholder="LoveFroyo ID"/>
+								<!--<label for="edit-pass">Password <span class="form-required" title="This field is required.">*</span></label>-->
+								<input type="password" id="edit-pass" name="pass" size="15" maxlength="128" class="form-text required" placeholder="Password"/>
+								<ul data-role="listview" data-inset="true" data-theme="a" data-divider-theme="a" data-count-theme="a" data-split-theme="a">
+									<li class="first"><a href="./user/register" title="Create a new user account."data-role="button" data-inline="true">Register</a></li>
+									<li> <a href="./user/password" data-role="button" data-inline="true" />Forgot Password?</a></li>
+								</ul> 
+
+								<input type="hidden" name="form_build_id" value="form-gtcOYY7jg-F4q7fYJ3EGpJSqVmxXVzKPxiBEEkIAxsk"/>
+								<input type="hidden" name="form_id" value="user_login_block"/>
+								<div class="form-actions form-wrapper" id="edit-actions--2">
+									<input type="submit" id="edit-submit--2" name="op" value="Log in" style="padding:10px;" class="form-submit"/>
+								</div>
+							</div>
+                          
+						</form>
+ 					</div>
+                  
+				</div>
+                
+               
+              
+                   
+				
+                  
+				</div>
+    		<!-- /.content-secondary -->
+	<div id="footer" data-theme="a" data-position="inline" data-role="footer">
+        <button onclick="window.plugins.socialsharing.shareViaTwitter('Message via Twitter')">message via Twitter</button>
+<button onclick="window.plugins.socialsharing.shareViaTwitter('Message and link via Twitter', null, 'http://www.x-services.nl')">msg and link via Twitter</button>
+<button onclick="window.plugins.socialsharing.shareViaFacebook('Message via Facebook', null, null, console.log('share ok'), function(errormsg){alert(errormsg)})">msg via Facebook (with errcallback)</button>
+<button onclick="window.plugins.socialsharing.shareViaWhatsApp('Message via WhatsApp', null, null, console.log('share ok'), function(errormsg){alert(errormsg)})">msg via WhatsApp (with errcallback)</button>
+	</div>
+	 <!--/#footer --> 
+</div>
+
+		</ul>-->
+         <!--<ul id="btn-list-footer">
+			<li class="ui-btn-inner">
+			<a href="#nav-panel">nav</a>
+			</li>
+			<li class="ui-btn-inner">
+			<a onClick="listSocial();">Social</a>
+			</li>
+			<li class="ui-btn-inner">
+			<a href="/shout">ShoutOut</a>
+			</li>
+			<li class="ui-btn-inner">
+			<a href="/what">What's New</a>
+			</li>
+			<li class="ui-btn-inner">
+			<a href="/vote">Vote</a>
+			</li>
+		</ul>-->
+       <!-- <a href="#nav-panel" class="ui-btn ui-btn-inline ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all">Nav-Panel</a>-->
+    <div id="main-menu-holder" >
+     <ul id="main-menu">
+    <li class="menu-leaf">
+      <a href="#wform" onClick="listSocial();" id="btn-social"  data-role="button" data-icon="tag" class="ui-btn ui-btn-inline ui-shadow ui-icon-tag ui-btn-icon-left ui-corner-all">Social</a>
+     </li>
+       <li class="menu-leaf">
+       <a href="#wform" onClick="listShout();"  id="btn-shout" data-role="button" data-icon="audio" class="ui-btn ui-btn-inline ui-shadow ui-icon-comment ui-btn-icon-left ui-corner-all">Shout Out</a>
+      </li>
+      <!--<a href="#" onClick="listWhat();"  data-role="button" data-icon="star"  class="ui-btn ui-btn-inline ui-icon-star ui-btn-icon-left ui-corner-all">What's New</a>
+     
+     <a href="#" onClick="listVote();"  data-role="button" data-icon="check" class="ui-btn ui-btn-inline ui-icon-check ui-btn-icon-left ui-corner-all">Vote</a>-->
+      </ul>
+      </div>
+      </div><!-- /footer -->
+      
+      
+     
+      
+    </div>
+    <!-- /page -->
+    
+<<<<<<< HEAD
+=======
      <script type="text/javascript">
       $().ready(function() {
           
@@ -163,7 +494,7 @@
                     if (result.user.uid != 0) {
                       $('#logout').show();
                       $('#go').hide();
-                      if (Drupal.user.uid != 1) {
+                      if (Drupal.user.uid != 0) {
                         //$('#run_tests').show('slow');
 						$('#footer').show('slow');
 						
@@ -236,6 +567,20 @@
           });
       });
     </script>
+>>>>>>> parent of 68f81e9... menu
+=======
+>>>>>>> 3f7ebac6bb350bf57cd703201246872f05ff22a4
     
-  </body>
+  
+
+
+<!-- /#page -->
+<!--<script type="text/javascript">var islrsharing = true; var islrsocialcounter = true;var hybridsharing = true;</script>
+<script type="text/javascript" src="//share.loginradius.com/Content/js/LoginRadius.js" id="lrsharescript"></script>
+<script type="text/javascript">-->
+<!--//--><!--<![CDATA[//>--><!--
+LoginRadius.util.ready(function () { $i = $SS.Interface.horizontal; $SS.Providers.Top = ["facebook","twitter","linkedin","google"]; $u = LoginRadius.user_settings; $u.apikey="ad34f7ed-75af-48c4-8fcb-2ee71b9c1b83";$u.sharecounttype='url'; $i.size = 32;$i.show("lrsharecontainer"); });
+//--><!--<!]]>
+</script>-->
+</body>
 </html>

@@ -1,8 +1,173 @@
 /* CSS Document */
-.ui-header:empty, .ui-footer:empty {
-    bottom: -10px;
+.ui-header:empty, .ui-footer:empty{
+    bottom: 0px;
     left: 0px;
     min-height: 2.6875em;
+	width:100%;
     position: fixed;
+	background:none;
+	border:none;
 }
 
+div#navigation {
+	 bottom: 4em;
+    padding: 0 10px;
+    position: fixed;
+    width: 100%;
+}
+
+ul#btn-list-header li.ui-btn-inner, ul#btn-list-footer li.ui-btn-inner {
+    display: block;
+    float: left !important;
+    overflow: hidden;
+    padding: 8px 15px;
+    position: relative;
+    text-overflow: ellipsis;
+    white-space: nowrap;;
+}
+
+/*a#mainmenu.ui-btn {
+	height:30px;
+}*/
+
+div#main-menu-holder {
+	position:fixed;
+	left:-40px;
+	
+}
+
+
+ul#main-menu, ul, menu, dir  {
+	padding:none;
+}
+
+ul#main-menu li.menu-leaf {
+border-left: 1px solid #333;
+border-right: 1px solid #961351;
+border-top: 1px solid #d27ea6;
+border-bottom: 1px solid #d27ea6;
+
+    float: left;
+    list-style: none outside none;
+    margin-top: -22px;
+	width:105px;
+	height:50px;
+
+	
+background: #be417f; /* Old browsers */
+background: -moz-linear-gradient(top,  #be417f 0%, #a10d6d 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#be417f), color-stop(100%,#a10d6d)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #be417f 0%,#a10d6d 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #be417f 0%,#a10d6d 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #be417f 0%,#a10d6d 100%); /* IE10+ */
+background: linear-gradient(to bottom,  #be417f 0%,#a10d6d 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#be417f', endColorstr='#a10d6d',GradientType=0 ); /* IE6-9 */
+
+
+}
+
+ul#main-menu li.menu-leaf a {
+  background: none repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
+    border: 0 solid;
+    border-radius: 0;
+    box-shadow: none !important;
+    color: #380923;
+    font-family: Arial,Helvetica,sans-serif;
+    height: 25px;
+    padding: 15px 5px 5px 15px;
+    text-shadow: 1px 1px 0 #929080;
+    top: -5px;
+    width: 85px;
+}
+
+div#nav-panel.ui-panel div.ui-panel-inner ul.ui-listview li a {
+	font-weight:100;
+}
+
+html.js body.html div#page div#content.clearfix div.region div#block-system-main.block div.content div.comment div.user-picture a img
+
+div#branding {
+	display:none;
+}
+
+div.region-content {
+}
+
+div.ui-content {
+	padding:0px !important;
+}
+
+
+html, body.ui-mobile-viewport, div.ui-mobile-viewport,
+
+.ui-bar-a, .ui-page-theme-a .ui-bar-inherit, html .ui-bar-a .ui-bar-inherit, html .ui-body-a .ui-bar-inherit, html body .ui-group-theme-a .ui-bar-inherit,
+ui-panel-dismiss-open.ui-panel-dismiss-position-left, .ui-panel-dismiss-open, ui-panel-dismiss, .ui-overlay-a, .ui-page-theme-a, .ui-page-theme-a .ui-panel-wrapper
+ {
+    background: url("../img/bg-orange.jpg") repeat scroll 0 0 #EF8C37 !important;
+    font-family: 'Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif !important;
+}
+
+div#panel-fixed-page1, .ui-overlay-a, .ui-page-theme-a, .ui-page-theme-a, .ui-header {
+	background:none !important;
+	border: none !important;
+}
+
+#footer, .ui-footer {
+    background: url("../img/header-tile.png") repeat-x scroll 0 -20px #ED088E !important;
+    border-top: 1px solid #F562A4 !important;
+    bottom: 0 !important;
+    display: block;
+    min-height: 2.6875em;
+	height:22px;
+    padding:0px 5px;
+    position: fixed !important;
+    text-shadow: 0 1px 1px #333333;
+    width: 100%;
+    z-index: 1000;
+}
+
+
+div#banner img, div#title img {
+	margin-top:100px;
+	width:100%;
+}
+
+btn#social_share {
+	position: fixed;
+	top:200px;
+}
+/************ Preloadme **********************/
+
+body {
+		overflow: hidden;
+	}
+
+	/* Preloader */
+	#preloader {
+		position: fixed;
+		top:0;
+		left:0;
+		right:0;
+		bottom:0;
+		/*background-color:#fff;  change if the mask should have another color then white */
+		/*background-color:rgba(255,255,255,0.9) !important;*/
+		background-color:none;
+		/*background:none repeat scroll 0 center rgba(0, 0, 0, 0);*/
+		z-index:99; /* makes sure it stays on top */
+	}
+
+	#status {
+		width:200px;
+		height:200px;
+		opacity:0.3 !important;
+		position:absolute;
+		left:50%; /* centers the loading animation horizontally one the screen */
+		top:50%; /* centers the loading animation vertically one the screen */
+		background-image:url(../img/status.gif); /* path to your loading animation */
+		background-color:rgba(255,255,255,0.9) !important;
+		border-radius: 10px;
+		box-shadow:1px 2px 4px #333;
+		background-repeat:no-repeat !important;
+		background-position:center;
+		margin:-100px 0 0 -100px; /* is width and height divided by two */
+	}
