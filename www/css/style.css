@@ -132,7 +132,10 @@ div#banner img, div#title img {
 	width:100%;
 }
 
-
+btn#social_share {
+	position: fixed;
+	top:200px;
+}
 /************ Preloadme **********************/
 
 body {
