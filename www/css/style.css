@@ -36,12 +36,35 @@ div#main-menu-holder {
 	
 }
 
+.ui-header .ui-title, .ui-footer .ui-title {
+    display: block;
+    font-size: 1em;
+    margin: 0 auto !important;
+    min-height: 1.1em;
+    outline: 0 none !important;
+    overflow: hidden;
+    padding: 0.7em 0;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 
 ul#main-menu, ul, menu, dir  {
 	padding:none;
 }
-
 ul#main-menu li.menu-leaf {
+   background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border-style: solid;
+    border-width: 0;
+    float: left;
+    height: 50px;
+    list-style: none outside none;
+    margin-top: 0;
+    padding: 0;
+    width: 83px;
+}
+ul#main-menu li.menu-leafss {
 border-left: 1px solid #333;
 border-right: 1px solid #961351;
 border-top: 1px solid #d27ea6;
@@ -67,17 +90,23 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#be417f', end
 }
 
 ul#main-menu li.menu-leaf a {
-  background: none repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
-    border: 0 solid;
+     background: none repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
+    border: 0px solid;
     border-radius: 0;
     box-shadow: none !important;
     color: #380923;
     font-family: Arial,Helvetica,sans-serif;
-    height: 25px;
-    padding: 15px 5px 5px 15px;
+    height: 27px;
+    padding: 40px 0 0;
     text-shadow: 1px 1px 0 #929080;
-    top: -5px;
-    width: 85px;
+    top: -28px;
+    width: 80px;
+}
+
+
+h1#title.ui-title img {
+	width:100%;
+	margin-top:100px;
 }
 
 div#nav-panel.ui-panel div.ui-panel-inner ul.ui-listview li a {
@@ -112,18 +141,15 @@ div#panel-fixed-page1, .ui-overlay-a, .ui-page-theme-a, .ui-page-theme-a, .ui-he
 	border: none !important;
 }
 
-#footer, .ui-footer {
-    background: url("../img/header-tile.png") repeat-x scroll 0 -20px #ED088E !important;
+  #footer, .ui-footer {
+	 /* background: url("../img/header-tile.png") repeat-x scroll 0 -20px #ED088E !important;*/
+    background: url("../img/lf-gui-350.jpg") repeat-x scroll 0 0 #ED088E !important;
     border-top: 1px solid #F562A4 !important;
     bottom: 0 !important;
-    display: block;
+    height: 60px;
     min-height: 2.6875em;
-	height:22px;
-    padding:0px 5px;
     position: fixed !important;
     text-shadow: 0 1px 1px #333333;
-    width: 100%;
-    z-index: 1000;
 }
 
 
@@ -132,10 +158,7 @@ div#banner img, div#title img {
 	width:100%;
 }
 
-btn#social_share {
-	position: fixed;
-	top:200px;
-}
+
 /************ Preloadme **********************/
 
 body {

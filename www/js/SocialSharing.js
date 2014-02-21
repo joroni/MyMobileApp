@@ -44,16 +44,7 @@ SocialSharing.install = function () {
   return window.plugins.socialsharing;
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 //cordova.addConstructor(SocialSharing.install);
-
-=======
-cordova.addConstructor(SocialSharing.install);
->>>>>>> 3f7ebac6bb350bf57cd703201246872f05ff22a4
-=======
-cordova.addConstructor(SocialSharing.install);
->>>>>>> 3f7ebac6bb350bf57cd703201246872f05ff22a4
 
 
 

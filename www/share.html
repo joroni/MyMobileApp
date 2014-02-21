@@ -1,34 +1,82 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Love Froyo Share</title>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script type="text/javascript">
-    function onLoad() {
-      $("#shared").text(location.search);
+<!DOCTYPE HTML>
+<html manifest="" lang="en-US"><head>
+    <meta charset="UTF-8">
+    <title>AndroidSencha</title>
+   <!-- <script src="js/jquery.js" type="text/javascript"></script> <script src="js/jquery-ui.js" type="text/javascript"></script> <script src="js/ble.js" type="text/javascript"></script> -->
+
+    <script id="microloader" type="text/javascript" src="js/cordova-1.9.0.js"></script>
+    <script id="microloader" type="text/javascript" src="js/LocalNotification.js"></script>
+    <script id="microloader" type="text/javascript">
+
+    function onDeviceReady() {
+        if (!window.plugins) {
+            window.plugins = {};
+        } else if (!window.plugins.LocalNotification) {
+            window.plugins.LocalNotification = cordova.require("cordova/plugin/LocalNotification");
+        }
     }
 
-    function share() {
-      // The use has clicked share, you should now share it with their friends!
-      window.close();
+    window.document.addEventListener("deviceready", appReady, false);
+
+    function appReady() {
+        console.log("PAPA AMERICANO ready");
+
+        var d = new Date();
+        d = d.getTime() + 2 * 1000; //60 seconds from now
+        d = new Date(d);
+
+        if (!window.plugins) {
+            window.plugins = {};
+        }
+
+        if (!window.plugins.LocalNotification) {
+            window.plugins.LocalNotification = cordova.require("cordova/plugin/LocalNotification");
+        }
+
+        window.plugins.localNotification.add({
+            date: d,
+            message: 'This is an Android alarm using the statusbar',
+            id: 123
+        });
     }
 
-    var shareData;
-    addEventListener("OpenGraphData", function(e) {
-      shareData = JSON.parse(e.detail);
-      $("#shared").text(shareData.url);
-      $("#data").text(e.detail);
-      socialMarkUpdate(true);
-    });
     </script>
-</head>
+    <style type="text/css">
+         /**
+         * Example of an initial loading indicator.
+         * It is recommended to keep this as minimal as possible to provide instant feedback
+         * while other resources are still being loaded for the first time
+         */
+        html, body {
+            height: 100%;
+            background-color: #1985D0
+        }
 
-<body onload="onLoad()">
-  <div id="content">
-    <h3>This window shares the url</h3>
-    <div>Sharing: <div id="shared" class="textbox"></div></div>
-    <div>Data: <div id="data" class="textbox"></div></div>
-    <button onclick="share();">Share!</button>
-  </div>
+    </style>
+
+    <!-- The line below must be kept intact for Sencha Command to build your application -->
+    <script id="microloader" type="text/javascript" src="sdk/microloader/development.js"></script>
+        <style type="text/css">
+.loadingText{
+color: white;
+font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
+text-align: center;
+font-size: 20px;
+padding-top: 10%;
+}
+</style>
+</head>
+<body>
+    <div id="appLoadingIndicator">
+    <div class="loadingText"><div style="margin-bottom: 10px;">Loading, Please wait..</div>
+     <div style="background-color:#fff; padding:5px; border-radius:5px; width:50px; margin:0 auto; opacity:0.8;"><img src="img/ajax_loader_blue_48.gif" style="width:32px; border-radius:20px; ">
+   
+    <div id="busy3" class="square" style="background:#0059a6">
+</div>
+    
+    
+    </div>
+    </div>
+
 </body>
 </html>
